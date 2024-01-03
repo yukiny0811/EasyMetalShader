@@ -239,12 +239,12 @@ void svd_2x2(
 {
   // First compute a givens rotation to eliminate 1,0 entry in tensor
   float c, s;
-  givens(A.columns[0].x, A.columns[1].x, c, s);
+  givens(A.columns[0].x, A.columns[0].y, c, s);
   float2x2 const R = float2x2(c, -s, s, c);
   float2x2 const B = R * A;
   // B is bidiagonal. Use specialized algorithm to compute its SVD
   float2x2 U_B, S_B, V_B;
-  svd_bidiagonal(B.columns[0].x, B.columns[0].y, B.columns[1].y, U_B, S_B, V_B);
+  svd_bidiagonal(B.columns[0].x, B.columns[1].x, B.columns[1].y, U_B, S_B, V_B);
   float2x2 const X = U_B;
   S = S_B;
   V = V_B;
