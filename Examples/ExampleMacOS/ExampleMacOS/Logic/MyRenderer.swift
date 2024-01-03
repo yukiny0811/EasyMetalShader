@@ -22,16 +22,16 @@ class MyRenderer: ShaderRenderer {
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         
-        SCMetalDispatch()
-            .compute { [self] encoder in
-                compute1.tex = drawable.texture
-                compute1.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
-                compute1.dispatch(encoder, textureSizeReference: drawable.texture)
-            }
-            .render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
-                render1.dispatch(encoder, textureSizeRederence: drawable.texture, primitiveType: .point, vertices: particles)
-            }
-            .present(drawable: drawable)
-            .commit()
+        let dispatch = SCMetalDispatch()
+        dispatch.compute { [self] encoder in
+            compute1.tex = drawable.texture
+            compute1.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
+            compute1.dispatch(encoder, textureSizeReference: drawable.texture)
+        }
+        dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
+            render1.dispatch(encoder, textureSizeRederence: drawable.texture, primitiveType: .point, vertices: particles)
+        }
+        dispatch.present(drawable: drawable)
+        dispatch.commit()
     }
 }
