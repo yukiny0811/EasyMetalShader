@@ -16,14 +16,13 @@ public class SCMetalDispatch {
         commandBuffer = ShaderCore.commandQueue.makeCommandBuffer()!
     }
     
-    public func compute(_ process: @escaping (MTLComputeCommandEncoder) -> ()) -> Self {
+    public func compute(_ process: @escaping (MTLComputeCommandEncoder) -> ()) {
         let encoder = commandBuffer.makeComputeCommandEncoder()!
         process(encoder)
         encoder.endEncoding()
-        return self
     }
     
-    public func render(renderTargetTexture: MTLTexture, needsClear: Bool, process: @escaping (MTLRenderCommandEncoder) -> ()) -> Self {
+    public func render(renderTargetTexture: MTLTexture, needsClear: Bool, process: @escaping (MTLRenderCommandEncoder) -> ()) {
         let descriptor = MTLRenderPassDescriptor()
         descriptor.colorAttachments[0].texture = renderTargetTexture
         if needsClear {
@@ -36,12 +35,10 @@ public class SCMetalDispatch {
         let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
         process(encoder)
         encoder.endEncoding()
-        return self
     }
     
-    public func present(drawable: MTLDrawable) -> Self {
+    public func present(drawable: MTLDrawable) {
         commandBuffer.present(drawable)
-        return self
     }
     
     public func commit() {
