@@ -8,8 +8,8 @@
 import MetalKit
 import simd
 
-enum SCMetalTexture {
-    static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
+public enum SCMetalTexture {
+    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
