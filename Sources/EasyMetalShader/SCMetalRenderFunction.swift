@@ -9,7 +9,7 @@ import MetalKit
 import simd
 
 open class SCMetalRenderFunction {
-    private static let initialMetalHeader = "#include <metal_stdlib> \n using namespace metal;inline float rand(int x, int y, int z) {int seed = x + y * 57 + z * 241;seed = (seed<< 13) ^ seed;return (( 1.0 - ( (seed * (seed * seed * 15731 + 789221) + 1376312589) & 2147483647) / 1073741824.0f) + 1.0f) / 2.0f;}struct RasterizerData {float4 position [[ position ]];float4 color;float size [[point_size]];};"
+    private static let initialMetalHeader = "#include <metal_stdlib> \n using namespace metal;inline float rand(int x, int y, int z) {int seed = x + y * 57 + z * 241;seed = (seed<< 13) ^ seed;return (( 1.0 - ( (seed * (seed * seed * 15731 + 789221) + 1376312589) & 2147483647) / 1073741824.0f) + 1.0f) / 2.0f;}struct RasterizerData {float4 position [[ position ]];float4 color;float size [[point_size]];};" + MetalFuncs.svd
     
     private var args: [String: SCMetalArgument]
     
