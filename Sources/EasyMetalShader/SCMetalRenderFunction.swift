@@ -134,6 +134,7 @@ open class SCMetalRenderFunction {
             functionImpl += ","
         }
         functionImpl += "RasterizerData rd [[stage_in]],"
+        functionImpl += "float2 pc [[point_coord]],"
         functionImpl += "float4 c0 [[color(0)]]"
         functionImpl += "){"
         
