@@ -240,8 +240,8 @@ open class SCMetalRenderFunction {
                 originY: 0,
                 width: Double(textureSizeRederence.width),
                 height: Double(textureSizeRederence.height),
-                znear: -1,
-                zfar: 1
+                znear: 0.0,
+                zfar: 1.0
             )
         )
         
