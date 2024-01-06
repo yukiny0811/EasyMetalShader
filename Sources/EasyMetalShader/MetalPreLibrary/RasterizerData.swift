@@ -22,6 +22,16 @@ struct RasterizerData {
     float4 temp7;
     float4 temp8;
     float4 temp9;
+
+    float4 flat1 [[flat]];
+    float4 flat2 [[flat]];
+    float4 flat3 [[flat]];
+    float4 flat4 [[flat]];
+    float4 flat5 [[flat]];
+    float4 flat6 [[flat]];
+    float4 flat7 [[flat]];
+    float4 flat8 [[flat]];
+    float4 flat9 [[flat]];
 };
 """
 }
