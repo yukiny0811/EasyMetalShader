@@ -1,12 +1,9 @@
 //
-//  File.swift
-//  
+//  SCMetalArgument.swift
+//
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
 //
-
-import MetalKit
-import simd
 
 public enum SCMetalArgument {
     case bool(Bool)

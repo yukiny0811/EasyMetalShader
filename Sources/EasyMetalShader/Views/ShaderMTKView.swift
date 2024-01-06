@@ -65,35 +65,3 @@ public class ShaderMTKView: MTKView {
     }
     #endif
 }
-
-#if os(macOS)
-public struct EasyShaderView: NSViewRepresentable {
-    
-    let renderer: ShaderRenderer
-    
-    public init(renderer: ShaderRenderer) {
-        self.renderer = renderer
-    }
-    
-    public func makeNSView(context: Context) -> MTKView {
-        let mtkView = ShaderMTKView(renderer: renderer)
-        return mtkView
-    }
-    public func updateNSView(_ nsView: MTKView, context: Context) {}
-}
-#elseif os(iOS)
-public struct EasyShaderView: UIViewRepresentable {
-    
-    let renderer: ShaderRenderer
-    
-    public init(renderer: ShaderRenderer) {
-        self.renderer = renderer
-    }
-    
-    public func makeUIView(context: Context) -> MTKView {
-        let mtkView = ShaderMTKView(renderer: renderer)
-        return mtkView
-    }
-    public func updateUIView(_ uiView: MTKView, context: Context) {}
-}
-#endif

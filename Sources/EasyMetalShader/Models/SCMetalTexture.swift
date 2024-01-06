@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  SCMetalTexture.swift
 //  
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
