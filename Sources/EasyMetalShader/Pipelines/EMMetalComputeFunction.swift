@@ -11,7 +11,7 @@ import simd
 @objcMembers
 open class EMMetalComputeFunction: NSObject, EMMetalFunction {
     
-    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd
+    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand
     
     var computePipelineState: MTLComputePipelineState!
     
@@ -19,6 +19,11 @@ open class EMMetalComputeFunction: NSObject, EMMetalFunction {
     
     @ShaderStringBuilder 
     open var impl: String {
+        ""
+    }
+    
+    @ShaderStringBuilder
+    open var customMetalCode: String {
         ""
     }
     
@@ -31,6 +36,7 @@ open class EMMetalComputeFunction: NSObject, EMMetalFunction {
         
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
+        functionImpl += customMetalCode
         functionImpl += "kernel void \(tempFunctionName)("
         
         for (i, key) in args.keys.enumerated() {

@@ -11,7 +11,7 @@ import simd
 @objcMembers
 open class EMMetalRenderFunction: NSObject, EMMetalFunction {
     
-    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData + MetalPreLibrary.vertexInput
+    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.rasterizerData + MetalPreLibrary.vertexInput
     
     public var args: [String: EMMetalArgument] = [:]
     
@@ -23,6 +23,11 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
     @ShaderStringBuilder open var vertImpl: String { "" }
     @ShaderStringBuilder open var fragImpl: String { "" }
     
+    @ShaderStringBuilder
+    open var customMetalCode: String {
+        ""
+    }
+    
     public init(targetPixelFormat: MTLPixelFormat) {
         super.init()
         
@@ -32,6 +37,7 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
         
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
+        functionImpl += customMetalCode
         
         //vertex
         functionImpl += "vertex RasterizerData \(tempFunctionName)_vert("
