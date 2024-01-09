@@ -6,7 +6,7 @@
 //
 
 extension MetalPreLibrary {
-    static let rand =
+    public static let rand =
 """
 inline float rand(int x, int y, int z) {
     int seed = x + y * 57 + z * 241;

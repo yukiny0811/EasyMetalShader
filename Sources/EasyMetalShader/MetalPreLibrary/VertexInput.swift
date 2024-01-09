@@ -9,7 +9,7 @@ import Foundation
 import simd
 
 extension MetalPreLibrary {
-    static let vertexInput =
+    public static let vertexInput =
 """
 struct VertexInput {
     float4 input0 [[ attribute(0) ]];

@@ -6,7 +6,7 @@
 //
 
 extension MetalPreLibrary {
-    static let rasterizerData =
+    public static let rasterizerData =
 """
 struct RasterizerData {
     float4 position [[ position ]];
