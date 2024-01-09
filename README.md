@@ -227,7 +227,7 @@ class MyRender: EMMetalRenderFunction {
     override var vertImpl: String {
         "rd.size = 10;"
         "rd.position = vertexInput.input0;"
-        "rd.color = float4(1, 0.6, 0.8, 1);"
+        "rd.color = vertexInput.input1;"
     }
     
     @ShaderStringBuilder
@@ -242,15 +242,14 @@ class MyRender: EMMetalRenderFunction {
 class MyRenderer: ShaderRenderer {
     
     var particles: [VertexInput] = {
-        var ps: [simd_float4] = []
+        var inputs: [VertexInput] = []
         for _ in 0...1000 {
-            ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
+            var input = VertexInput()
+            input.input0 = .init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1)
+            input.input1 = .init(Float.random(in: 0.3...1), 0.3, 0.3, 1)
+            inputs.append(input)
         }
-        return ps.map {
-            var vertexInput = VertexInput()
-            vertexInput.input0 = $0
-            return vertexInput
-        }
+        return inputs
     }()
     
     let compute = MyCompute()

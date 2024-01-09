@@ -28,7 +28,7 @@ class MyRender: EMMetalRenderFunction {
     override var vertImpl: String {
         "rd.size = 10;"
         "rd.position = vertexInput.input0;"
-        "rd.color = float4(1, 0.6, 0.8, 1);"
+        "rd.color = vertexInput.input1;"
     }
     
     @ShaderStringBuilder

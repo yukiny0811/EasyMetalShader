@@ -10,15 +10,14 @@ import EasyMetalShader
 class MyRenderer: ShaderRenderer {
     
     var particles: [VertexInput] = {
-        var ps: [simd_float4] = []
+        var inputs: [VertexInput] = []
         for _ in 0...1000 {
-            ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
+            var input = VertexInput()
+            input.input0 = .init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1)
+            input.input1 = .init(Float.random(in: 0.3...1), 0.3, 0.3, 1)
+            inputs.append(input)
         }
-        return ps.map {
-            var vertexInput = VertexInput()
-            vertexInput.input0 = $0
-            return vertexInput
-        }
+        return inputs
     }()
     
     let compute = MyCompute()
