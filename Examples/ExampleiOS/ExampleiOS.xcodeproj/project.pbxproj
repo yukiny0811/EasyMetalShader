@@ -13,6 +13,7 @@
 		56C015712B4D748700E51B4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C015702B4D748700E51B4A /* Preview Assets.xcassets */; };
 		56C0157C2B4D74D700E51B4A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157B2B4D74D700E51B4A /* Functions.swift */; };
 		56C0157E2B4D74E300E51B4A /* MyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157D2B4D74E300E51B4A /* MyRenderer.swift */; };
+		56C015872B4D7CC100E51B4A /* EasyMetalShader in Frameworks */ = {isa = PBXBuildFile; productRef = 56C015862B4D7CC100E51B4A /* EasyMetalShader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56C015872B4D7CC100E51B4A /* EasyMetalShader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +43,7 @@
 			children = (
 				56C015682B4D748600E51B4A /* ExampleiOS */,
 				56C015672B4D748600E51B4A /* Products */,
+				56C015852B4D7CC100E51B4A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,6 +84,13 @@
 			path = Logic;
 			sourceTree = "<group>";
 		};
+		56C015852B4D7CC100E51B4A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -98,6 +108,7 @@
 			);
 			name = ExampleiOS;
 			packageProductDependencies = (
+				56C015862B4D7CC100E51B4A /* EasyMetalShader */,
 			);
 			productName = ExampleiOS;
 			productReference = 56C015662B4D748600E51B4A /* ExampleiOS.app */;
@@ -374,6 +385,13 @@
 			relativePath = ../..;
 		};
 /* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		56C015862B4D7CC100E51B4A /* EasyMetalShader */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EasyMetalShader;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 56C0155E2B4D748600E51B4A /* Project object */;
 }

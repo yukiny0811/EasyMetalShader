@@ -8,6 +8,6 @@
       location = "group:Examples/ExampleMacOS/ExampleMacOS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ExampleiOS/ExampleiOS.xcodeproj">
+      location = "group:Examples/ExampleiOS/ExampleiOS.xcodeproj">
    </FileRef>
 </Workspace>
