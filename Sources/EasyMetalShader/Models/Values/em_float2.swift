@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  em_float2.swift
 //  
 //
 //  Created by Yuki Kuwashima on 2024/01/09.
@@ -8,7 +8,7 @@
 import simd
 
 @objcMembers
-public class sc_float2: NSObject {
+public class em_float2: NSObject {
     public var x: Float
     public var y: Float
     public var simdValue: simd_float2 {

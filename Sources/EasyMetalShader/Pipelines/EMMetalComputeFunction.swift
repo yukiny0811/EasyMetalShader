@@ -1,5 +1,5 @@
 //
-//  SCMetalComputeFunction.swift
+//  EMMetalComputeFunction.swift
 //
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
@@ -9,13 +9,13 @@ import MetalKit
 import simd
 
 @objcMembers
-open class SCMetalComputeFunction: NSObject, SCMetalFunction {
+open class EMMetalComputeFunction: NSObject, EMMetalFunction {
     
     private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd
     
     var computePipelineState: MTLComputePipelineState!
     
-    public var args: [String: SCMetalArgument] = [:]
+    public var args: [String: EMMetalArgument] = [:]
     
     @ShaderStringBuilder 
     open var impl: String {

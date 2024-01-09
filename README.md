@@ -14,9 +14,9 @@ You can easily send any variables to the shader, simply by defining the variable
 ```.swift
 import EasyMetalShader
 
-class MyCompute: SCMetalComputeFunction {
+class MyCompute: EMMetalComputeFunction {
     
-    @EMArgument("tex") var tex: SCMetalTexture = .init(texture: nil, usage: .read_write)
+    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
     @EMArgument("col") var col: Float = 0
     
     @ShaderStringBuilder
@@ -71,7 +71,7 @@ struct RasterizerData {
 ```.swift
 import EasyMetalShader
 
-class MyRender: SCMetalRenderFunction {
+class MyRender: EMMetalRenderFunction {
     
     @ShaderStringBuilder
     override var vertImpl: String {
@@ -98,7 +98,7 @@ class MyRenderer: ShaderRenderer {
     
     var particles: [simd_float4] = {
         var ps: [simd_float4] = []
-        for _ in 0...1000{
+        for _ in 0...1000 {
             ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
         }
         return ps
@@ -108,9 +108,9 @@ class MyRenderer: ShaderRenderer {
     let render = MyRender(targetPixelFormat: .bgra8Unorm)
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
-        let dispatch = SCMetalDispatch()
+        let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = SCMetalTexture(texture: drawable.texture)
+            compute.tex = EMMetalTexture(texture: drawable.texture)
             compute.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
@@ -144,10 +144,10 @@ struct ContentView: View {
 You can manually dispatch compute or render functions outside of MTKView.
 
 ```.swift
-let tex = SCMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: "tex", usage: .read_write)
-let dispatch = SCMetalDispatch()
+let tex = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: "tex", usage: .read_write)
+let dispatch = EMMetalDispatch()
 dispatch.compute { encoder in
-    compute.tex = SCMetalTexture(texture: tex)
+    compute.tex = EMMetalTexture(texture: tex)
     compute.col = 0.5
     compute.dispatch(encoder, textureSizeReference: tex)
 }
@@ -162,10 +162,10 @@ dispatch.commit()
 - Int
 - Float
 - Bool
-- sc_int2 (simd_int2)
-- sc_int3 (simd_int3)
-- sc_int4 (simd_int4)
-- sc_float2 (simd_float2)
-- sc_float3 (simd_float3)
-- sc_float4 (simd_float4)
-- SCMetalTexture (MTLTexture 2D)
+- em_int2 (simd_int2)
+- em_int3 (simd_int3)
+- em_int4 (simd_int4)
+- em_float2 (simd_float2)
+- em_float3 (simd_float3)
+- em_float4 (simd_float4)
+- EMMetalTexture (MTLTexture 2D)

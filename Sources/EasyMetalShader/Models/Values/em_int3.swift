@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  em_int3.swift
 //  
 //
 //  Created by Yuki Kuwashima on 2024/01/09.
@@ -8,7 +8,7 @@
 import simd
 
 @objcMembers
-public class sc_int3: NSObject {
+public class em_int3: NSObject {
     public var x: Int32
     public var y: Int32
     public var z: Int32

@@ -1,5 +1,5 @@
 //
-//  SCMetalRenderFunction.swift
+//  EMMetalRenderFunction.swift
 //
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
@@ -9,11 +9,11 @@ import MetalKit
 import simd
 
 @objcMembers
-open class SCMetalRenderFunction: NSObject, SCMetalFunction {
+open class EMMetalRenderFunction: NSObject, EMMetalFunction {
     
     private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData
     
-    public var args: [String: SCMetalArgument] = [:]
+    public var args: [String: EMMetalArgument] = [:]
     
     var renderPipelineState: MTLRenderPipelineState! 
     

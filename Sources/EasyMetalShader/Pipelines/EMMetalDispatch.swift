@@ -1,5 +1,5 @@
 //
-//  SCMetalDispatch.swift
+//  EMMetalDispatch.swift
 //  
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
@@ -8,7 +8,7 @@
 import MetalKit
 import simd
 
-public class SCMetalDispatch {
+public class EMMetalDispatch {
     
     private let commandBuffer: MTLCommandBuffer
     

@@ -9,7 +9,7 @@ import MetalKit
 import Foundation
 
 @propertyWrapper
-public class EMArgument<Value: SCArgumentCompatible> {
+public class EMArgument<Value: EMArgumentCompatible> {
     
     private var value: Value
     private let key: String
@@ -28,7 +28,7 @@ public class EMArgument<Value: SCArgumentCompatible> {
         self.initialValue = wrappedValue
     }
     
-    public static subscript<EnclosingSelf: SCMetalFunction>(
+    public static subscript<EnclosingSelf: EMMetalFunction>(
         _enclosingInstance object: EnclosingSelf,
         wrapped wrappedKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Value>,
         storage storageKeyPath: ReferenceWritableKeyPath<EnclosingSelf, EMArgument>
@@ -39,7 +39,7 @@ public class EMArgument<Value: SCArgumentCompatible> {
         set {
             object[keyPath: storageKeyPath].value = newValue
             let thisKey = object[keyPath: storageKeyPath].key
-            object.args[thisKey] = SCMetalArgument.getMetalArgument(from: object[keyPath: storageKeyPath].value)
+            object.args[thisKey] = EMMetalArgument.getMetalArgument(from: object[keyPath: storageKeyPath].value)
         }
     }
 }

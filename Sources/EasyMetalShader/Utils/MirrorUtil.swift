@@ -9,7 +9,7 @@ import Foundation
 
 enum MirrorUtil {
     
-    static func setInitialValue(for object: SCMetalFunction) {
+    static func setInitialValue(for object: EMMetalFunction) {
         let mir = Mirror(reflecting: object).children
         let mirArray = Array(mir)
         for prop in mirArray {
@@ -21,7 +21,7 @@ enum MirrorUtil {
                     let typeString = String(propString[propString.index(propString.startIndex, offsetBy: 27)..<propString.index(propString.endIndex, offsetBy: -1)]) //ex Swift.Float
                     print(typeString)
                     print(propLabel)
-                    object.setValue(SCMetalArgument.getInitialValue(of: prop.value, objTypeString: typeString), forKey: propLabel)
+                    object.setValue(EMMetalArgument.getInitialValue(of: prop.value, objTypeString: typeString), forKey: propLabel)
                 }
             }
         }

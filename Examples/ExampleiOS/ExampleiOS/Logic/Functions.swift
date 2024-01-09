@@ -7,9 +7,9 @@
 
 import EasyMetalShader
 
-class MyCompute1: SCMetalComputeFunction {
+class MyCompute1: EMMetalComputeFunction {
     
-    @EMArgument("tex") var tex: SCMetalTexture = .init(texture: nil, usage: .read_write)
+    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
     @EMArgument("col") var col: Float = 0
     
     @ShaderStringBuilder
@@ -18,7 +18,7 @@ class MyCompute1: SCMetalComputeFunction {
     }
 }
 
-class MyRender1: SCMetalRenderFunction {
+class MyRender1: EMMetalRenderFunction {
     
     @ShaderStringBuilder
     override var vertImpl: String {

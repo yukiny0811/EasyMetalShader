@@ -1,5 +1,5 @@
 //
-//  SCMetalTexture.swift
+//  EMMetalTexture.swift
 //  
 //
 //  Created by Yuki Kuwashima on 2024/01/04.
@@ -9,17 +9,17 @@ import MetalKit
 import simd
 
 @objcMembers
-public class SCMetalTexture: NSObject {
+public class EMMetalTexture: NSObject {
     
     public var texture: MTLTexture?
-    public var usage: SCMetalTextureUsage
+    public var usage: EMMetalTextureUsage
     
-    public init(texture: MTLTexture?, usage: SCMetalTextureUsage = .read_write) {
+    public init(texture: MTLTexture?, usage: EMMetalTextureUsage = .read_write) {
         self.texture = texture
         self.usage = usage
     }
     
-    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: SCMetalTextureUsage) -> SCMetalTexture {
+    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: EMMetalTextureUsage) -> EMMetalTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
@@ -29,10 +29,10 @@ public class SCMetalTexture: NSObject {
         descriptor.resourceOptions = .storageModePrivate
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
-        return SCMetalTexture(texture: texture, usage: usage)
+        return EMMetalTexture(texture: texture, usage: usage)
     }
     
-    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: SCMetalTextureUsage) -> SCMetalTexture {
+    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: EMMetalTextureUsage) -> EMMetalTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
@@ -46,6 +46,6 @@ public class SCMetalTexture: NSObject {
         #endif
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
-        return SCMetalTexture(texture: texture, usage: usage)
+        return EMMetalTexture(texture: texture, usage: usage)
     }
 }
