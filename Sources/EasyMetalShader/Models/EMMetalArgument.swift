@@ -25,8 +25,8 @@ public enum EMMetalArgument {
         switch objTypeString {
         case "Swift.Bool":
             return (obj as? EMArgument<Bool>)?.initialValue
-        case "Swift.Int":
-            return (obj as? EMArgument<Int>)?.initialValue
+        case "Swift.Int32":
+            return (obj as? EMArgument<Int32>)?.initialValue
         case "EasyMetalShader.em_int2":
             return (obj as? EMArgument<em_int2>)?.initialValue
         case "EasyMetalShader.em_int3":

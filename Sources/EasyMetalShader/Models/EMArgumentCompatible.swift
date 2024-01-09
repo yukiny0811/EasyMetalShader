@@ -10,7 +10,7 @@ import MetalKit
 
 public protocol EMArgumentCompatible {}
 extension Bool: EMArgumentCompatible {}
-extension Int: EMArgumentCompatible {}
+extension Int32: EMArgumentCompatible {}
 extension Float: EMArgumentCompatible {}
 extension em_int2: EMArgumentCompatible {}
 extension em_int3: EMArgumentCompatible {}
