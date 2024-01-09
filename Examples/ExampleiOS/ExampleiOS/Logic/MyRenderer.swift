@@ -18,7 +18,7 @@ class MyRenderer: ShaderRenderer {
     }()
     
     let compute1 = MyCompute1()
-    let render1 = MyRender1()
+    let render1 = MyRender1(targetPixelFormat: .bgra8Unorm)
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = SCMetalDispatch()

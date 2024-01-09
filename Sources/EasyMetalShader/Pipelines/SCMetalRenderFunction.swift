@@ -10,6 +10,7 @@ import simd
 
 @objcMembers
 open class SCMetalRenderFunction: NSObject, SCMetalFunction {
+    
     private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData
     
     public var args: [String: SCMetalArgument] = [:]
@@ -19,17 +20,21 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
     var renderTargetTexture: MTLTexture!
     var needsClear: Bool = false
     
-    public init(functionName: String, vertImpl: [String], fragImpl: [String], targetPixelFormat: MTLPixelFormat) {
-        
+    @ShaderStringBuilder open var vertImpl: String { "" }
+    @ShaderStringBuilder open var fragImpl: String { "" }
+    
+    public init(targetPixelFormat: MTLPixelFormat) {
         super.init()
         
         MirrorUtil.setInitialValue(for: self)
+        
+        let tempFunctionName = "f" + UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
         
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
         
         //vertex
-        functionImpl += "vertex RasterizerData \(functionName)_vert("
+        functionImpl += "vertex RasterizerData \(tempFunctionName)_vert("
         
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
@@ -96,12 +101,12 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
             }
         }
         
-        functionImpl += vertImpl.joined()
+        functionImpl += vertImpl
         functionImpl += "return rd;"
         functionImpl += "}"
         
         //fragment
-        functionImpl += "fragment float4 \(functionName)_frag("
+        functionImpl += "fragment float4 \(tempFunctionName)_frag("
         
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
@@ -169,7 +174,7 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
             }
         }
         
-        functionImpl += fragImpl.joined()
+        functionImpl += fragImpl
         functionImpl += "}"
         
         
@@ -178,8 +183,8 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
             options: nil
         )
         let descriptor = MTLRenderPipelineDescriptor()
-        descriptor.vertexFunction = library.makeFunction(name: functionName + "_vert")
-        descriptor.fragmentFunction = library.makeFunction(name: functionName + "_frag")
+        descriptor.vertexFunction = library.makeFunction(name: tempFunctionName + "_vert")
+        descriptor.fragmentFunction = library.makeFunction(name: tempFunctionName + "_frag")
         
         let vertexDesc = MTLVertexDescriptor()
         vertexDesc.attributes[0].format = .float4

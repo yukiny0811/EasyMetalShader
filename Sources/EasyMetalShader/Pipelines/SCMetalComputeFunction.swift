@@ -17,15 +17,21 @@ open class SCMetalComputeFunction: NSObject, SCMetalFunction {
     
     public var args: [String: SCMetalArgument] = [:]
     
-    public init(functionName: String, impl: [String]) {
-        
+    @ShaderStringBuilder 
+    open var impl: String {
+        ""
+    }
+    
+    public override init() {
         super.init()
         
         MirrorUtil.setInitialValue(for: self)
         
+        let tempFunctionName = "f" + UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
+        
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
-        functionImpl += "kernel void \(functionName)("
+        functionImpl += "kernel void \(tempFunctionName)("
         
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
@@ -91,7 +97,7 @@ open class SCMetalComputeFunction: NSObject, SCMetalFunction {
             }
         }
         
-        functionImpl += impl.joined()
+        functionImpl += impl
         functionImpl += "}"
         
         let library = try! ShaderCore.device.makeLibrary(
@@ -100,7 +106,7 @@ open class SCMetalComputeFunction: NSObject, SCMetalFunction {
         )
         self.computePipelineState = try! ShaderCore.device.makeComputePipelineState(
             function: library.makeFunction(
-                name: functionName
+                name: tempFunctionName
             )!
         )
     }
