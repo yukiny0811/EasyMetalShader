@@ -1,6 +1,11 @@
 
 # EasyMetalShader
 
+[![Release](https://img.shields.io/github/v/release/yukiny0811/EasyMetalShader)](https://github.com/yukiny0811/EasyMetalShader/releases/latest)
+[![Swift Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fyukiny0811%2FEasyMetalShader%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/yukiny0811/EasyMetalShader)
+[![Platform Compatibility](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fyukiny0811%2FEasyMetalShader%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/yukiny0811/EasyMetalShader)
+[![License](https://img.shields.io/github/license/yukiny0811/EasyMetalShader)](https://github.com/yukiny0811/EasyMetalShader/blob/main/LICENSE)
+
 Easily create pipelines for Metal Shader.
 
 ## Usage
