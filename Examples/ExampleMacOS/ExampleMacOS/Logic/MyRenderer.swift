@@ -24,7 +24,7 @@ class MyRenderer: ShaderRenderer {
         
         let dispatch = SCMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute1.tex = drawable.texture
+            compute1.tex = SCMetalTexture(texture: drawable.texture)
             compute1.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
             compute1.dispatch(encoder, textureSizeReference: drawable.texture)
         }

@@ -9,25 +9,16 @@ import EasyMetalShader
 
 class MyCompute1: SCMetalComputeFunction {
     
-    var tex: MTLTexture?
-    var col: Float = 0
+    @EMArgument("tex") var tex: SCMetalTexture = .init(texture: nil, usage: .read_write)
+    @EMArgument("col") var col: Float = 0
     
     init() {
         super.init(
             functionName: "myCompute1",
-            args: [
-                "tex": .texture2d(tex, .read_write),
-                "col": .float(col)
-            ],
             impl: [
                 "tex.write(float4(col, 0.1, col, 1), gid);"
             ]
         )
-    }
-    
-    override func setVariables(args: inout [String : SCMetalArgument]) {
-        args["tex"] = .texture2d(tex, .read_write)
-        args["col"] = .float(col)
     }
 }
 
@@ -36,7 +27,6 @@ class MyRender1: SCMetalRenderFunction {
     init() {
         super.init(
             functionName: "myRender1",
-            args: [:],
             vertImpl: [
                 "rd.size = 1;",
                 "rd.position = input;",
@@ -45,7 +35,7 @@ class MyRender1: SCMetalRenderFunction {
             fragImpl: [
                 "return rd.color;"
             ],
-            targetPixelFormat: .rgba8Unorm
+            targetPixelFormat: .bgra8Unorm
         )
     }
 }

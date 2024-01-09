@@ -8,18 +8,22 @@
 import MetalKit
 import simd
 
-open class SCMetalRenderFunction {
+@objcMembers
+open class SCMetalRenderFunction: NSObject, SCMetalFunction {
     private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData
     
-    private var args: [String: SCMetalArgument]
+    public var args: [String: SCMetalArgument] = [:]
     
-    let renderPipelineState: MTLRenderPipelineState
+    var renderPipelineState: MTLRenderPipelineState! 
     
     var renderTargetTexture: MTLTexture!
     var needsClear: Bool = false
     
-    public init(functionName: String, args: [String: SCMetalArgument], vertImpl: [String], fragImpl: [String], targetPixelFormat: MTLPixelFormat) {
-        self.args = args
+    public init(functionName: String, vertImpl: [String], fragImpl: [String], targetPixelFormat: MTLPixelFormat) {
+        
+        super.init()
+        
+        MirrorUtil.setInitialValue(for: self)
         
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
@@ -190,10 +194,7 @@ open class SCMetalRenderFunction {
         self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
     }
     
-    open func setVariables(args: inout [String: SCMetalArgument]) {}
-    
     public func dispatch(_ encoder: MTLRenderCommandEncoder, textureSizeRederence: MTLTexture, primitiveType: MTLPrimitiveType, vertices: [simd_float4]) {
-        setVariables(args: &args)
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
             case .bool(let value):

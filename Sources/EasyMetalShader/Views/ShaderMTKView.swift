@@ -26,7 +26,7 @@ public class ShaderMTKView: MTKView {
         self.delegate = renderer
         self.enableSetNeedsDisplay = false
         self.isPaused = false
-        self.colorPixelFormat = .rgba8Unorm
+        self.colorPixelFormat = .bgra8Unorm
         self.framebufferOnly = false
         self.preferredFramesPerSecond = 60
         self.autoResizeDrawable = true

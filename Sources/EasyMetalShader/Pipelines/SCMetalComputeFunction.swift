@@ -8,16 +8,20 @@
 import MetalKit
 import simd
 
-open class SCMetalComputeFunction {
+@objcMembers
+open class SCMetalComputeFunction: NSObject, SCMetalFunction {
     
     private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd
     
-    let computePipelineState: MTLComputePipelineState
+    var computePipelineState: MTLComputePipelineState!
     
-    private var args: [String: SCMetalArgument]
+    public var args: [String: SCMetalArgument] = [:]
     
-    public init(functionName: String, args: [String: SCMetalArgument], impl: [String]) {
-        self.args = args
+    public init(functionName: String, impl: [String]) {
+        
+        super.init()
+        
+        MirrorUtil.setInitialValue(for: self)
         
         var functionImpl = ""
         functionImpl += Self.initialMetalHeader
@@ -121,10 +125,7 @@ open class SCMetalComputeFunction {
         return (threadGroupCount, threadsPerThreadgroup)
     }
     
-    open func setVariables(args: inout [String: SCMetalArgument]) {}
-    
     public func dispatch(_ encoder: MTLComputeCommandEncoder, textureSizeReference: MTLTexture) {
-        setVariables(args: &args)
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
             case .bool(let value):
