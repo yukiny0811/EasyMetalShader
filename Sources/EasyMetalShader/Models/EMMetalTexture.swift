@@ -14,12 +14,12 @@ public class EMMetalTexture: NSObject {
     public var texture: MTLTexture?
     public var usage: EMMetalTextureUsage
     
-    public init(texture: MTLTexture?, usage: EMMetalTextureUsage = .read_write) {
+    public init(texture: MTLTexture?, usage: EMMetalTextureUsage) {
         self.texture = texture
         self.usage = usage
     }
     
-    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: EMMetalTextureUsage) -> EMMetalTexture {
+    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
@@ -29,10 +29,10 @@ public class EMMetalTexture: NSObject {
         descriptor.resourceOptions = .storageModePrivate
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
-        return EMMetalTexture(texture: texture, usage: usage)
+        return texture
     }
     
-    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, usage: EMMetalTextureUsage) -> EMMetalTexture {
+    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
@@ -46,6 +46,14 @@ public class EMMetalTexture: NSObject {
         #endif
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
-        return EMMetalTexture(texture: texture, usage: usage)
+        return texture
+    }
+}
+
+public extension MTLTexture {
+    
+    // dont use this before shader compilation!
+    var emTexture: EMMetalTexture {
+        .init(texture: self, usage: .read)
     }
 }

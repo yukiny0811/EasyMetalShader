@@ -70,6 +70,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                     functionImpl += "texture2d<float, access::write> \(key) [[texture(\(i+1))]]"
                 case .read_write:
                     functionImpl += "texture2d<float, access::read_write> \(key) [[texture(\(i+1))]]"
+                case .sample:
+                    functionImpl += "texture2d<float, access::sample> \(key) [[texture(\(i+1))]]"
                 }
             case .none:
                 break
@@ -142,6 +144,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                     functionImpl += "texture2d<float, access::write> \(key) [[texture(\(i+1))]]"
                 case .read_write:
                     functionImpl += "texture2d<float, access::read_write> \(key) [[texture(\(i+1))]]"
+                case .sample:
+                    functionImpl += "texture2d<float, access::sample> \(key) [[texture(\(i+1))]]"
                 }
             case .none:
                 break
