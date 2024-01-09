@@ -26,7 +26,7 @@ class MyRenderer: ShaderRenderer {
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = EMMetalTexture(texture: drawable.texture)
+            compute.tex = drawable.texture.emTexture
             compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }

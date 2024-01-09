@@ -9,4 +9,5 @@ public enum EMMetalTextureUsage {
     case read
     case write
     case read_write
+    case sample
 }
