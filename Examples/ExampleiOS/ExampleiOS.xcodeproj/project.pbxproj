@@ -11,10 +11,8 @@
 		56C0156C2B4D748600E51B4A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0156B2B4D748600E51B4A /* ContentView.swift */; };
 		56C0156E2B4D748700E51B4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C0156D2B4D748700E51B4A /* Assets.xcassets */; };
 		56C015712B4D748700E51B4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C015702B4D748700E51B4A /* Preview Assets.xcassets */; };
-		56C015792B4D74C100E51B4A /* EasyMetalShader in Frameworks */ = {isa = PBXBuildFile; productRef = 56C015782B4D74C100E51B4A /* EasyMetalShader */; };
 		56C0157C2B4D74D700E51B4A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157B2B4D74D700E51B4A /* Functions.swift */; };
 		56C0157E2B4D74E300E51B4A /* MyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157D2B4D74E300E51B4A /* MyRenderer.swift */; };
-		56C015842B4D775E00E51B4A /* EasyMetalShader in Frameworks */ = {isa = PBXBuildFile; productRef = 56C015832B4D775E00E51B4A /* EasyMetalShader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +30,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56C015792B4D74C100E51B4A /* EasyMetalShader in Frameworks */,
-				56C015842B4D775E00E51B4A /* EasyMetalShader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,8 +98,6 @@
 			);
 			name = ExampleiOS;
 			packageProductDependencies = (
-				56C015782B4D74C100E51B4A /* EasyMetalShader */,
-				56C015832B4D775E00E51B4A /* EasyMetalShader */,
 			);
 			productName = ExampleiOS;
 			productReference = 56C015662B4D748600E51B4A /* ExampleiOS.app */;
@@ -134,7 +128,7 @@
 			);
 			mainGroup = 56C0155D2B4D748600E51B4A;
 			packageReferences = (
-				56C015822B4D775E00E51B4A /* XCLocalSwiftPackageReference ".." */,
+				56C0157F2B4D76E500E51B4A /* XCLocalSwiftPackageReference "../.." */,
 			);
 			productRefGroup = 56C015672B4D748600E51B4A /* Products */;
 			projectDirPath = "";
@@ -375,22 +369,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		56C015822B4D775E00E51B4A /* XCLocalSwiftPackageReference ".." */ = {
+		56C0157F2B4D76E500E51B4A /* XCLocalSwiftPackageReference "../.." */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ..;
+			relativePath = ../..;
 		};
 /* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		56C015782B4D74C100E51B4A /* EasyMetalShader */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = EasyMetalShader;
-		};
-		56C015832B4D775E00E51B4A /* EasyMetalShader */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = EasyMetalShader;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 56C0155E2B4D748600E51B4A /* Project object */;
 }
