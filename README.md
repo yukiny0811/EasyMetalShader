@@ -279,3 +279,5 @@ struct ContentView: View {
     }
 }
 ```
+
+![outout](https://github.com/yukiny0811/EasyMetalShader/assets/28947703/4626e606-64fe-4e1a-902e-ba9554632a9a)
