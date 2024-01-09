@@ -14,7 +14,6 @@ public class SCMetalTexture: NSObject {
     public var texture: MTLTexture?
     public var usage: SCMetalTextureUsage
     
-    
     public init(texture: MTLTexture?, usage: SCMetalTextureUsage = .read_write) {
         self.texture = texture
         self.usage = usage

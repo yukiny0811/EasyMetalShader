@@ -194,7 +194,7 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
         self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
     }
     
-    public func dispatch(_ encoder: MTLRenderCommandEncoder, textureSizeRederence: MTLTexture, primitiveType: MTLPrimitiveType, vertices: [simd_float4]) {
+    public func dispatch(_ encoder: MTLRenderCommandEncoder, textureSizeReference: MTLTexture, primitiveType: MTLPrimitiveType, vertices: [simd_float4]) {
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
             case .bool(let value):
@@ -239,8 +239,8 @@ open class SCMetalRenderFunction: NSObject, SCMetalFunction {
             .init(
                 originX: 0,
                 originY: 0,
-                width: Double(textureSizeRederence.width),
-                height: Double(textureSizeRederence.height),
+                width: Double(textureSizeReference.width),
+                height: Double(textureSizeReference.height),
                 znear: 0.0,
                 zfar: 1.0
             )

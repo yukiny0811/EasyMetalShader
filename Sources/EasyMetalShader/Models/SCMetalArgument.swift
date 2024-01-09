@@ -8,20 +8,7 @@
 import simd
 import MetalKit
 
-public enum SCMetalArgument: CaseIterable {
-    
-    public static var allCases: [SCMetalArgument] = [
-        .bool(false),
-        .int(0),
-        .int2(.zero),
-        .int3(.zero),
-        .int4(.zero),
-        .float(0),
-        .float2(.zero),
-        .float3(.zero),
-        .float4(.zero),
-        .texture2d(nil, .read),
-    ]
+public enum SCMetalArgument {
     
     case bool(Bool)
     case int(Int32)
@@ -93,107 +80,5 @@ public enum SCMetalArgument: CaseIterable {
         default:
             return nil
         }
-    }
-}
-
-public protocol SCArgumentCompatible {}
-extension Bool: SCArgumentCompatible {}
-extension Int: SCArgumentCompatible {}
-extension Float: SCArgumentCompatible {}
-extension sc_int2: SCArgumentCompatible {}
-extension sc_int3: SCArgumentCompatible {}
-extension sc_int4: SCArgumentCompatible {}
-extension sc_float2: SCArgumentCompatible {}
-extension sc_float3: SCArgumentCompatible {}
-extension sc_float4: SCArgumentCompatible {}
-extension SCMetalTexture: SCArgumentCompatible {}
-
-@objcMembers
-public class sc_int2: NSObject {
-    public var x: Int32
-    public var y: Int32
-    public var simdValue: simd_int2 {
-        return .init(x, y)
-    }
-    public init(_ x: Int32, _ y: Int32) {
-        self.x = x
-        self.y = y
-    }
-}
-
-@objcMembers
-public class sc_int3: NSObject {
-    public var x: Int32
-    public var y: Int32
-    public var z: Int32
-    public var simdValue: simd_int3 {
-        return .init(x, y, z)
-    }
-    public init(_ x: Int32, _ y: Int32, _ z: Int32) {
-        self.x = x
-        self.y = y
-        self.z = z
-    }
-}
-
-@objcMembers
-public class sc_int4: NSObject {
-    public var x: Int32
-    public var y: Int32
-    public var z: Int32
-    public var w: Int32
-    public var simdValue: simd_int4 {
-        return .init(x, y, z, w)
-    }
-    public init(_ x: Int32, _ y: Int32, _ z: Int32, _ w: Int32) {
-        self.x = x
-        self.y = y
-        self.z = z
-        self.w = w
-    }
-}
-
-@objcMembers
-public class sc_float2: NSObject {
-    public var x: Float
-    public var y: Float
-    public var simdValue: simd_float2 {
-        return .init(x, y)
-    }
-    public init(_ x: Float, _ y: Float) {
-        self.x = x
-        self.y = y
-    }
-}
-
-@objcMembers
-public class sc_float3: NSObject {
-    public var x: Float
-    public var y: Float
-    public var z: Float
-    public var simdValue: simd_float3 {
-        return .init(x, y, z)
-    }
-    public init(_ x: Float, _ y: Float, _ z: Float) {
-        self.x = x
-        self.y = y
-        self.z = z
-    }
-}
-
-@objcMembers
-public class sc_float4: NSObject {
-    public var x: Float
-    public var y: Float
-    public var z: Float
-    public var w: Float
-    public var simdValue: simd_float4 {
-        return .init(x, y, z, w)
-    }
-    public init(_ x: Float, _ y: Float, _ z: Float, _ w: Float) {
-        self.x = x
-        self.y = y
-        self.z = z
-        self.w = w
     }
 }

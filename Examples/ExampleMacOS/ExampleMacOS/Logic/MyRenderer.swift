@@ -21,7 +21,6 @@ class MyRenderer: ShaderRenderer {
     let render1 = MyRender1()
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
-        
         let dispatch = SCMetalDispatch()
         dispatch.compute { [self] encoder in
             compute1.tex = SCMetalTexture(texture: drawable.texture)
@@ -29,7 +28,7 @@ class MyRenderer: ShaderRenderer {
             compute1.dispatch(encoder, textureSizeReference: drawable.texture)
         }
         dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
-            render1.dispatch(encoder, textureSizeRederence: drawable.texture, primitiveType: .point, vertices: particles)
+            render1.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
         }
         dispatch.present(drawable: drawable)
         dispatch.commit()

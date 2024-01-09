@@ -10,4 +10,3 @@ public enum SCMetalTextureUsage {
     case write
     case read_write
 }
-
