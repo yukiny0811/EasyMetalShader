@@ -169,3 +169,13 @@ dispatch.commit()
 - em_float3 (simd_float3)
 - em_float4 (simd_float4)
 - EMMetalTexture (MTLTexture 2D)
+
+### Custom Pipelines
+
+```.swift
+let dispatch = EMMetalDispatch()
+dispatch.custom { commandBuffer in
+    // do something with commandBuffer
+}
+dispatch.commit()
+```

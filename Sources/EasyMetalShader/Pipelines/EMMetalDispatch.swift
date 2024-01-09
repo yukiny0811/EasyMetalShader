@@ -16,6 +16,10 @@ public class EMMetalDispatch {
         commandBuffer = ShaderCore.commandQueue.makeCommandBuffer()!
     }
     
+    public func custom(_ process: @escaping (MTLCommandBuffer) -> ()) {
+        process(commandBuffer)
+    }
+    
     public func compute(_ process: @escaping (MTLComputeCommandEncoder) -> ()) {
         let encoder = commandBuffer.makeComputeCommandEncoder()!
         process(encoder)
