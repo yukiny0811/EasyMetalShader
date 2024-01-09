@@ -39,7 +39,11 @@ public class SCMetalTexture: NSObject {
         descriptor.width = width
         descriptor.height = height
         descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        #if os(macOS)
         descriptor.resourceOptions = .storageModeManaged
+        #elseif os(iOS)
+        descriptor.resourceOptions = .storageModeShared
+        #endif
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return SCMetalTexture(texture: texture, usage: usage)
