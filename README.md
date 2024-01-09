@@ -135,7 +135,7 @@ class MyRenderer: ShaderRenderer {
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = EMMetalTexture(texture: drawable.texture)
+            compute.tex = drawable.texture.emTexture
             compute.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
@@ -172,7 +172,7 @@ You can manually dispatch compute or render functions outside of MTKView.
 let tex = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: "tex", usage: .read_write)
 let dispatch = EMMetalDispatch()
 dispatch.compute { encoder in
-    compute.tex = EMMetalTexture(texture: tex)
+    compute.tex = tex.emTexture
     compute.col = 0.5
     compute.dispatch(encoder, textureSizeReference: tex)
 }
@@ -203,6 +203,19 @@ dispatch.custom { commandBuffer in
     // do something with commandBuffer
 }
 dispatch.commit()
+```
+
+### Custom Metal Functions
+
+override customMetalCode property to add your original metal codes.
+
+```.swift
+@ShaderStringBuilder
+override var customMetalCode: String {
+    "inline float myFunc() {"
+    "return 1.0;"
+    "}"
+}
 ```
 
 ## Sample Code
@@ -263,7 +276,7 @@ class MyRenderer: ShaderRenderer {
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = EMMetalTexture(texture: drawable.texture)
+            compute.tex = drawable.texture.emTexture
             compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
