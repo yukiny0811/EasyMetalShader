@@ -9,9 +9,7 @@ import SwiftUI
 import EasyMetalShader
 
 struct ContentView: View {
-    
     let renderer = MyRenderer()
-    
     var body: some View {
         EasyShaderView(renderer: renderer)
     }

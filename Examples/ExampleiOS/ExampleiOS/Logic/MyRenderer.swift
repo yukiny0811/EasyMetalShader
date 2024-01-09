@@ -9,26 +9,30 @@ import EasyMetalShader
 
 class MyRenderer: ShaderRenderer {
     
-    var particles: [simd_float4] = {
+    var particles: [VertexInput] = {
         var ps: [simd_float4] = []
-        for _ in 0...100000 {
+        for _ in 0...1000 {
             ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
         }
-        return ps
+        return ps.map {
+            var vertexInput = VertexInput()
+            vertexInput.input0 = $0
+            return vertexInput
+        }
     }()
     
-    let compute1 = MyCompute1()
-    let render1 = MyRender1(targetPixelFormat: .bgra8Unorm)
+    let compute = MyCompute()
+    let render = MyRender(targetPixelFormat: .bgra8Unorm)
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute1.tex = EMMetalTexture(texture: drawable.texture)
-            compute1.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
-            compute1.dispatch(encoder, textureSizeReference: drawable.texture)
+            compute.tex = EMMetalTexture(texture: drawable.texture)
+            compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
+            compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
         dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
-            render1.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
+            render.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
         }
         dispatch.present(drawable: drawable)
         dispatch.commit()

@@ -30,11 +30,27 @@ class MyCompute: EMMetalComputeFunction {
 
 Same as the compute function, you can send variables to both vertex and fragment shader.
 
-"input" is pre-defined in vertex function as float4, which stands for [[ stage_in ]].
+"vertexInput" is pre-defined in vertex function as VertexInput, which stands for [[ stage_in ]].
+
+"c0" is pre-defined in fragment function as float4, which stands for [[ color(0) ]].
 
 "rd" is pre-defined for both vertex and fragment function, which stands for RasterizerData.
 
 ```.metal
+//VertexInput
+struct VertexInput {
+    float4 input0 [[ attribute(0) ]]; // this is usually for position
+    float4 input1 [[ attribute(1) ]]; // this is usually for color
+    float4 input2 [[ attribute(2) ]]; // use other inputs to pass values to vertex shader
+    float4 input3 [[ attribute(3) ]];
+    float4 input4 [[ attribute(4) ]];
+    float4 input5 [[ attribute(5) ]];
+    float4 input6 [[ attribute(6) ]];
+    float4 input7 [[ attribute(7) ]];
+    float4 input8 [[ attribute(8) ]];
+    float4 input9 [[ attribute(9) ]];
+};
+
 //RasterizerData
 struct RasterizerData {
     float4 position [[ position ]];
@@ -76,7 +92,7 @@ class MyRender: EMMetalRenderFunction {
     @ShaderStringBuilder
     override var vertImpl: String {
         "rd.size = 1;"
-        "rd.position = input;"
+        "rd.position = vertexInput.input0;"
         "rd.color = float4(1, 0.6, 0.8, 1);"
     }
     
@@ -96,12 +112,16 @@ import EasyMetalShader
 
 class MyRenderer: ShaderRenderer {
     
-    var particles: [simd_float4] = {
+    var particles: [VertexInput] = {
         var ps: [simd_float4] = []
         for _ in 0...1000 {
             ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
         }
-        return ps
+        return ps.map {
+            var vertexInput = VertexInput()
+            vertexInput.input0 = $0
+            return vertexInput
+        }
     }()
     
     let compute = MyCompute()
@@ -178,4 +198,84 @@ dispatch.custom { commandBuffer in
     // do something with commandBuffer
 }
 dispatch.commit()
+```
+
+## Sample Code
+
+
+```.swift
+// compute shader
+class MyCompute: EMMetalComputeFunction {
+    
+    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
+    @EMArgument("intensity") var intensity: Float = 0
+    
+    @ShaderStringBuilder
+    override var impl: String {
+        "float2 floatGid = float2(gid.x, gid.y);"
+        "float2 center = float2(tex.get_width() / 2, tex.get_height() / 2);"
+        "float dist = distance(center, floatGid);"
+        "float color = intensity / dist;"
+        "tex.write(float4(color, color, color, 1), gid);"
+    }
+}
+
+// vertex/fragment shader
+class MyRender: EMMetalRenderFunction {
+    
+    @ShaderStringBuilder
+    override var vertImpl: String {
+        "rd.size = 10;"
+        "rd.position = vertexInput.input0;"
+        "rd.color = float4(1, 0.6, 0.8, 1);"
+    }
+    
+    @ShaderStringBuilder
+    override var fragImpl: String {
+        "return rd.color + c0;"
+    }
+}
+```
+
+```.swift
+// renderer
+class MyRenderer: ShaderRenderer {
+    
+    var particles: [VertexInput] = {
+        var ps: [simd_float4] = []
+        for _ in 0...1000 {
+            ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
+        }
+        return ps.map {
+            var vertexInput = VertexInput()
+            vertexInput.input0 = $0
+            return vertexInput
+        }
+    }()
+    
+    let compute = MyCompute()
+    let render = MyRender(targetPixelFormat: .bgra8Unorm)
+    
+    override func draw(view: MTKView, drawable: CAMetalDrawable) {
+        let dispatch = EMMetalDispatch()
+        dispatch.compute { [self] encoder in
+            compute.tex = EMMetalTexture(texture: drawable.texture)
+            compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
+            compute.dispatch(encoder, textureSizeReference: drawable.texture)
+        }
+        dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
+            render.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
+        }
+        dispatch.present(drawable: drawable)
+        dispatch.commit()
+    }
+}
+```
+```.swift
+struct ContentView: View {
+    let renderer = MyRenderer()
+    var body: some View {
+        EasyShaderView(renderer: renderer)
+    }
+}
 ```

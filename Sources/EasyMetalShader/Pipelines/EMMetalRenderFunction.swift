@@ -11,7 +11,7 @@ import simd
 @objcMembers
 open class EMMetalRenderFunction: NSObject, EMMetalFunction {
     
-    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData
+    private static let initialMetalHeader = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.svd + MetalPreLibrary.rasterizerData + MetalPreLibrary.vertexInput
     
     public var args: [String: EMMetalArgument] = [:]
     
@@ -70,7 +70,7 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
             }
             functionImpl += ","
         }
-        functionImpl += "const float4 input [[ stage_in attribute(0) ]]"
+        functionImpl += "const VertexInput vertexInput [[ stage_in ]]"
         functionImpl += "){"
         functionImpl += "RasterizerData rd;"
         
@@ -187,10 +187,12 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
         descriptor.fragmentFunction = library.makeFunction(name: tempFunctionName + "_frag")
         
         let vertexDesc = MTLVertexDescriptor()
-        vertexDesc.attributes[0].format = .float4
-        vertexDesc.attributes[0].offset = 0
-        vertexDesc.attributes[0].bufferIndex = 0
-        vertexDesc.layouts[0].stride = MemoryLayout<simd_float4>.stride
+        for i in 0..<10 {
+            vertexDesc.attributes[i].format = .float4
+            vertexDesc.attributes[i].offset = MemoryLayout<simd_float4>.stride * i
+            vertexDesc.attributes[i].bufferIndex = 0
+        }
+        vertexDesc.layouts[0].stride = MemoryLayout<simd_float4>.stride * 10
         vertexDesc.layouts[0].stepRate = 1
         vertexDesc.layouts[0].stepFunction = .perVertex
         descriptor.vertexDescriptor = vertexDesc
@@ -199,7 +201,7 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
         self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
     }
     
-    public func dispatch(_ encoder: MTLRenderCommandEncoder, textureSizeReference: MTLTexture, primitiveType: MTLPrimitiveType, vertices: [simd_float4]) {
+    public func dispatch(_ encoder: MTLRenderCommandEncoder, textureSizeReference: MTLTexture, primitiveType: MTLPrimitiveType, vertices: [VertexInput]) {
         for (i, key) in args.keys.enumerated() {
             switch args[key] {
             case .bool(let value):
@@ -237,7 +239,7 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
             }
         }
         
-        let vertexBuffer = ShaderCore.device.makeBuffer(bytes: vertices, length: MemoryLayout<simd_float4>.stride * vertices.count)
+        let vertexBuffer = ShaderCore.device.makeBuffer(bytes: vertices, length: MemoryLayout<VertexInput>.stride * vertices.count)
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
         encoder.setViewport(
