@@ -19,5 +19,11 @@ let package = Package(
         .target(
             name: "EasyMetalShader"
         ),
+        .testTarget(
+            name: "EasyMetalShaderTests",
+            dependencies: [
+                "EasyMetalShader"
+            ]
+        )
     ]
 )
