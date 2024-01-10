@@ -193,6 +193,9 @@ dispatch.commit()
 - em_float2 (simd_float2)
 - em_float3 (simd_float3)
 - em_float4 (simd_float4)
+- em_float2x2 (simd_float2x2)
+- em_float3x3 (simd_float3x3)
+- em_float4x4 (simd_float4x4)
 - EMMetalTexture (MTLTexture 2D)
 
 ### Custom Pipelines

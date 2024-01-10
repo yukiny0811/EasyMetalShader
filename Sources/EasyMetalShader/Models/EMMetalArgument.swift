@@ -19,6 +19,8 @@ public enum EMMetalArgument {
     case float2(simd_float2)
     case float3(simd_float3)
     case float4(simd_float4)
+    case float2x2(simd_float2x2)
+    case float3x3(simd_float3x3)
     case float4x4(simd_float4x4)
     case texture2d(MTLTexture!, EMMetalTextureUsage)
     
@@ -40,6 +42,10 @@ public enum EMMetalArgument {
             return (obj as? EMArgument<em_float3>)?.initialValue
         case "EasyMetalShader.em_float4":
             return (obj as? EMArgument<em_float4>)?.initialValue
+        case "EasyMetalShader.em_float2x2":
+            return (obj as? EMArgument<em_float2x2>)?.initialValue
+        case "EasyMetalShader.em_float3x3":
+            return (obj as? EMArgument<em_float3x3>)?.initialValue
         case "EasyMetalShader.em_float4x4":
             return (obj as? EMArgument<em_float4x4>)?.initialValue
         case "Swift.Float":
@@ -77,6 +83,12 @@ public enum EMMetalArgument {
         case is em_float4:
             let i = instance as! em_float4
             return .float4(i.simdValue)
+        case is em_float2x2:
+            let i = instance as! em_float2x2
+            return .float2x2(i.simdValue)
+        case is em_float3x3:
+            let i = instance as! em_float3x3
+            return .float3x3(i.simdValue)
         case is em_float4x4:
             let i = instance as! em_float4x4
             return .float4x4(i.simdValue)
