@@ -62,6 +62,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                 functionImpl += "device const float3* \(key)_buf [[buffer(\(i+1))]]"
             case .float4(_):
                 functionImpl += "device const float4* \(key)_buf [[buffer(\(i+1))]]"
+            case .float4x4(_):
+                functionImpl += "device const float4x4* \(key)_buf [[buffer(\(i+1))]]"
             case .texture2d(_, let usage):
                 switch usage {
                 case .read:
@@ -102,6 +104,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                 functionImpl += "float3 \(key) = \(key)_buf[0];"
             case .float4(_):
                 functionImpl += "float4 \(key) = \(key)_buf[0];"
+            case .float4x4(_):
+                functionImpl += "float4x4 \(key) = \(key)_buf[0];"
             case .texture2d(_, _):
                 break
             case .none:
@@ -136,6 +140,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                 functionImpl += "device const float3* \(key)_buf [[buffer(\(i+1))]]"
             case .float4(_):
                 functionImpl += "device const float4* \(key)_buf [[buffer(\(i+1))]]"
+            case .float4x4(_):
+                functionImpl += "device const float4x4* \(key)_buf [[buffer(\(i+1))]]"
             case .texture2d(_, let usage):
                 switch usage {
                 case .read:
@@ -177,6 +183,8 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
                 functionImpl += "float3 \(key) = \(key)_buf[0];"
             case .float4(_):
                 functionImpl += "float4 \(key) = \(key)_buf[0];"
+            case .float4x4(_):
+                functionImpl += "float4x4 \(key) = \(key)_buf[0];"
             case .texture2d(_, _):
                 break
             case .none:
@@ -241,6 +249,9 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
             case .float4(let value):
                 encoder.setVertexBytes([value], length: MemoryLayout<simd_float4>.stride, index: i+1)
                 encoder.setFragmentBytes([value], length: MemoryLayout<simd_float4>.stride, index: i+1)
+            case .float4x4(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_float4x4>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_float4x4>.stride, index: i+1)
             case .texture2d(let value, _):
                 encoder.setVertexTexture(value, index: i+1)
                 encoder.setFragmentTexture(value, index: i+1)
