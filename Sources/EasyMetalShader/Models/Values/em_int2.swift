@@ -14,6 +14,9 @@ public class em_int2: NSObject {
     public var simdValue: simd_int2 {
         return .init(x, y)
     }
+    public convenience init(_ value: simd_int2) {
+        self.init(value.x, value.y)
+    }
     public init(_ x: Int32, _ y: Int32) {
         self.x = x
         self.y = y

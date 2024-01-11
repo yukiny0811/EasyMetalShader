@@ -15,6 +15,9 @@ public class em_float3: NSObject {
     public var simdValue: simd_float3 {
         return .init(x, y, z)
     }
+    public convenience init(_ value: simd_float3) {
+        self.init(value.x, value.y, value.z)
+    }
     public init(_ x: Float, _ y: Float, _ z: Float) {
         self.x = x
         self.y = y
