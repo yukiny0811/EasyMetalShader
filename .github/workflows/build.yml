@@ -16,3 +16,11 @@ jobs:
         run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=macOS"
       - name: Build iOS
         run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=iOS"
+  test:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test macOS
+        run: xcodebuild -scheme EasyMetalShader test -destination "platform=macOS,arch=x86_64"
+      - name: Test iOS
+        run: xcodebuild -scheme EasyMetalShader test -destination "name=iPhone 14 Pro"
