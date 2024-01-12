@@ -44,6 +44,9 @@ class TestShader {
     @EMIgnore
     var tex6: MTLTexture?
     
+    @EMTextureArgument(.read)
+    var tex7: MTLTexture?
+    
     var impl: String {
         "int a = p1;"
         "bool b = p2;"

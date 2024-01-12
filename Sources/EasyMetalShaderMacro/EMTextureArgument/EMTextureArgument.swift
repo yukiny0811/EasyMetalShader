@@ -38,8 +38,12 @@ public struct EMTextureArgument: AccessorMacro {
             throw "invalid texture usage"
         }
         
-        let format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
+        var format: String?
         
+        if args.count >= 2 {
+            format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
+        }
+            
         guard type.trimmedDescription == "MTLTexture?" else {
             throw "type \(type) is not supported for EMTextureArgument."
         }

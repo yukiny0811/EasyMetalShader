@@ -62,7 +62,11 @@ extension EMComputeShader: MemberMacro {
                                     if attribute.attributeName.trimmedDescription == "EMTextureArgument" {
                                         if let args = attribute.arguments?.as(LabeledExprListSyntax.self) {
                                             usage = args.first?.as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
-                                            format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
+                                            if args.count >= 2 {
+                                                format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(
+                                                    MemberAccessExprSyntax.self
+                                                )?.declName.baseName.trimmedDescription
+                                            }
                                         }
                                         
                                     }

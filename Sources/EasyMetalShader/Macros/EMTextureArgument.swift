@@ -8,4 +8,4 @@
 import MetalKit
 
 @attached(accessor, names: named(didSet))
-public macro EMTextureArgument(_ usage: EMMetalTextureUsage, _ type: MTLTextureType) = #externalMacro(module: "EasyMetalShaderMacro", type: "EMTextureArgument")
+public macro EMTextureArgument(_ usage: EMMetalTextureUsage, _ type: MTLTextureType = .type2D) = #externalMacro(module: "EasyMetalShaderMacro", type: "EMTextureArgument")

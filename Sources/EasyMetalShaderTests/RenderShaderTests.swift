@@ -27,7 +27,6 @@ class TestRenderShader {
     var p11: simd_float3x3 = .init(0)
     var p12: simd_float4x4 = .init(0)
     
-    @EMTextureArgument(.read, .type2D)
     var tex1: MTLTexture?
     
     @EMTextureArgument(.read, .type2D)
@@ -44,6 +43,9 @@ class TestRenderShader {
     
     @EMIgnore
     var tex6: MTLTexture?
+    
+    @EMTextureArgument(.read)
+    var tex7: MTLTexture?
     
     var vertImpl: String {
         "int a = p1;"
