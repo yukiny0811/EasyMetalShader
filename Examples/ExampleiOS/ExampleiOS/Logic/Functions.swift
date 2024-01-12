@@ -6,33 +6,41 @@
 //
 
 import EasyMetalShader
+import simd
 
-class MyCompute: EMMetalComputeFunction {
+@EMComputeShader
+class MyCompute {
     
-    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
-    @EMArgument("intensity") var intensity: Float = 0
+    var intensity: Float = 3
+    var tex: MTLTexture?
     
-    @ShaderStringBuilder
-    override var impl: String {
+    var impl: String {
         "float2 floatGid = float2(gid.x, gid.y);"
         "float2 center = float2(tex.get_width() / 2, tex.get_height() / 2);"
         "float dist = distance(center, floatGid);"
         "float color = intensity / dist;"
         "tex.write(float4(color, color, color, 1), gid);"
     }
+    
+    var customMetalCode: String {
+        ""
+    }
 }
 
-class MyRender: EMMetalRenderFunction {
+@EMRenderShader
+class MyRender {
     
-    @ShaderStringBuilder
-    override var vertImpl: String {
+    var vertImpl: String {
         "rd.size = 10;"
         "rd.position = vertexInput.input0;"
-        "rd.color = float4(1, 0.6, 0.8, 1);"
+        "rd.color = vertexInput.input1;"
     }
     
-    @ShaderStringBuilder
-    override var fragImpl: String {
+    var fragImpl: String {
         "return rd.color + c0;"
+    }
+    
+    var customMetalCode: String {
+        ""
     }
 }

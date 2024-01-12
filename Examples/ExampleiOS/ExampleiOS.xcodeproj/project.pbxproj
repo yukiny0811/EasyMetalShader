@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5627863C2B515AB900355E44 /* EasyMetalShader in Frameworks */ = {isa = PBXBuildFile; productRef = 5627863B2B515AB900355E44 /* EasyMetalShader */; };
 		56C0156A2B4D748600E51B4A /* ExampleiOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C015692B4D748600E51B4A /* ExampleiOSApp.swift */; };
 		56C0156C2B4D748600E51B4A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0156B2B4D748600E51B4A /* ContentView.swift */; };
 		56C0156E2B4D748700E51B4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C0156D2B4D748700E51B4A /* Assets.xcassets */; };
 		56C015712B4D748700E51B4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C015702B4D748700E51B4A /* Preview Assets.xcassets */; };
 		56C0157C2B4D74D700E51B4A /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157B2B4D74D700E51B4A /* Functions.swift */; };
 		56C0157E2B4D74E300E51B4A /* MyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C0157D2B4D74E300E51B4A /* MyRenderer.swift */; };
-		56C015872B4D7CC100E51B4A /* EasyMetalShader in Frameworks */ = {isa = PBXBuildFile; productRef = 56C015862B4D7CC100E51B4A /* EasyMetalShader */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56C015872B4D7CC100E51B4A /* EasyMetalShader in Frameworks */,
+				5627863C2B515AB900355E44 /* EasyMetalShader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,7 +108,7 @@
 			);
 			name = ExampleiOS;
 			packageProductDependencies = (
-				56C015862B4D7CC100E51B4A /* EasyMetalShader */,
+				5627863B2B515AB900355E44 /* EasyMetalShader */,
 			);
 			productName = ExampleiOS;
 			productReference = 56C015662B4D748600E51B4A /* ExampleiOS.app */;
@@ -387,7 +387,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		56C015862B4D7CC100E51B4A /* EasyMetalShader */ = {
+		5627863B2B515AB900355E44 /* EasyMetalShader */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = EasyMetalShader;
 		};
