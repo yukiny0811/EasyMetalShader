@@ -12,21 +12,29 @@ Easily create pipelines for Metal Shader.
 
 ### Create Compute Function
 
-You can easily send any variables to the shader, simply by defining the variables with EMArgument property wrapper.
+You can easily send any variables to the shader, simply by defining it in your class.
 
 "gid" is pre-defined for [[thread_position_in_grid]]
 
 ```.swift
 import EasyMetalShader
 
-class MyCompute: EMMetalComputeFunction {
+@EMComputeShader
+class MyCompute {
     
-    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
-    @EMArgument("col") var col: Float = 0
+    var intensity: Float = 3
+    var tex: MTLTexture?
     
-    @ShaderStringBuilder
-    override var impl: String {
-        "tex.write(float4(col, 0.1, col, 1), gid);"
+    var impl: String {
+        "float2 floatGid = float2(gid.x, gid.y);"
+        "float2 center = float2(tex.get_width() / 2, tex.get_height() / 2);"
+        "float dist = distance(center, floatGid);"
+        "float color = intensity / dist;"
+        "tex.write(float4(color, color, color, 1), gid);"
+    }
+    
+    var customMetalCode: String {
+        ""
     }
 }
 ```
@@ -90,20 +98,21 @@ struct RasterizerData {
 ```
 
 ```.swift
-import EasyMetalShader
-
-class MyRender: EMMetalRenderFunction {
+@EMRenderShader
+class MyRender {
     
-    @ShaderStringBuilder
-    override var vertImpl: String {
-        "rd.size = 1;"
+    var vertImpl: String {
+        "rd.size = 10;"
         "rd.position = vertexInput.input0;"
-        "rd.color = float4(1, 0.6, 0.8, 1);"
+        "rd.color = vertexInput.input1;"
     }
     
-    @ShaderStringBuilder
-    override var fragImpl: String {
-        "return rd.color;"
+    var fragImpl: String {
+        "return rd.color + c0;"
+    }
+    
+    var customMetalCode: String {
+        ""
     }
 }
 ```
@@ -118,15 +127,14 @@ import EasyMetalShader
 class MyRenderer: ShaderRenderer {
     
     var particles: [VertexInput] = {
-        var ps: [simd_float4] = []
+        var inputs: [VertexInput] = []
         for _ in 0...1000 {
-            ps.append(.init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1))
+            var input = VertexInput()
+            input.input0 = .init(Float.random(in: -1...1), Float.random(in: -1...1), 0, 1)
+            input.input1 = .init(Float.random(in: 0.3...1), 0.3, 0.3, 1)
+            inputs.append(input)
         }
-        return ps.map {
-            var vertexInput = VertexInput()
-            vertexInput.input0 = $0
-            return vertexInput
-        }
+        return inputs
     }()
     
     let compute = MyCompute()
@@ -135,8 +143,8 @@ class MyRenderer: ShaderRenderer {
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = drawable.texture.emTexture
-            compute.col = abs(sin(Float(Date().timeIntervalSince(date)))) * 0.9
+            compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
+            compute.tex = drawable.texture
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
         dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
@@ -169,11 +177,11 @@ struct ContentView: View {
 You can manually dispatch compute or render functions outside of MTKView.
 
 ```.swift
-let tex = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: "tex", usage: .read_write)
+let tex = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: "tex")
 let dispatch = EMMetalDispatch()
 dispatch.compute { encoder in
-    compute.tex = tex.emTexture
-    compute.col = 0.5
+    compute.tex = tex
+    compute.intensity = 50
     compute.dispatch(encoder, textureSizeReference: tex)
 }
 dispatch.render(renderTargetTexture: tex, needsClear: false) { encoder in
@@ -182,21 +190,51 @@ dispatch.render(renderTargetTexture: tex, needsClear: false) { encoder in
 dispatch.commit()
 ```
 
+### Ignoring variables from being sent to the shader
+```.swift
+@EMComputeShader
+class MyCompute {
+    
+    @EMIgnore
+    var someVariable = 3
+}
+```
+
+### Custom Constructor
+
+```.swift
+@EMComputeShader
+class MyCompute {
+    
+    init(a: Float) {
+        setup() // you need this!
+    }
+}
+
+@EMRenderShader
+class MyRender {
+    
+    init(a: Float) {
+        setup(targetPixelFormat: .bgra8unorm) // you need this!
+    }
+}
+```
+
 ### Supported Data Types
 
-- Int
+- Int32
 - Float
 - Bool
-- em_int2 (simd_int2)
-- em_int3 (simd_int3)
-- em_int4 (simd_int4)
-- em_float2 (simd_float2)
-- em_float3 (simd_float3)
-- em_float4 (simd_float4)
-- em_float2x2 (simd_float2x2)
-- em_float3x3 (simd_float3x3)
-- em_float4x4 (simd_float4x4)
-- EMMetalTexture (MTLTexture 2D)
+- simd_int2
+- simd_int3
+- simd_int4
+- simd_float2
+- simd_float3
+- simd_float4
+- simd_float2x2
+- simd_float3x3
+- simd_float4x4
+- MTLTexture (only 2d texture)
 
 ### Custom Pipelines
 
@@ -210,11 +248,10 @@ dispatch.commit()
 
 ### Custom Metal Functions
 
-override customMetalCode property to add your original metal codes.
+implement customMetalCode property to add your original metal codes.
 
 ```.swift
-@ShaderStringBuilder
-override var customMetalCode: String {
+var customMetalCode: String {
     "inline float myFunc() {"
     "return 1.0;"
     "}"
@@ -226,34 +263,41 @@ override var customMetalCode: String {
 
 ```.swift
 // compute shader
-class MyCompute: EMMetalComputeFunction {
+@EMComputeShader
+class MyCompute {
     
-    @EMArgument("tex") var tex: EMMetalTexture = .init(texture: nil, usage: .read_write)
-    @EMArgument("intensity") var intensity: Float = 0
+    var intensity: Float = 3
+    var tex: MTLTexture?
     
-    @ShaderStringBuilder
-    override var impl: String {
+    var impl: String {
         "float2 floatGid = float2(gid.x, gid.y);"
         "float2 center = float2(tex.get_width() / 2, tex.get_height() / 2);"
         "float dist = distance(center, floatGid);"
         "float color = intensity / dist;"
         "tex.write(float4(color, color, color, 1), gid);"
     }
+    
+    var customMetalCode: String {
+        ""
+    }
 }
 
 // vertex/fragment shader
-class MyRender: EMMetalRenderFunction {
+@EMRenderShader
+class MyRender {
     
-    @ShaderStringBuilder
-    override var vertImpl: String {
+    var vertImpl: String {
         "rd.size = 10;"
         "rd.position = vertexInput.input0;"
         "rd.color = vertexInput.input1;"
     }
     
-    @ShaderStringBuilder
-    override var fragImpl: String {
+    var fragImpl: String {
         "return rd.color + c0;"
+    }
+    
+    var customMetalCode: String {
+        ""
     }
 }
 ```
@@ -279,8 +323,8 @@ class MyRenderer: ShaderRenderer {
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.tex = drawable.texture.emTexture
             compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
+            compute.tex = drawable.texture
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
         dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in

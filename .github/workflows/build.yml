@@ -6,10 +6,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 env:
-  DEVELOPER_DIR: /Applications/Xcode.app
+  DEVELOPER_DIR: /Applications/Xcode_15.2.app
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - name: Build macOS
@@ -17,7 +17,7 @@ jobs:
       - name: Build iOS
         run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=iOS"
   test:
-    runs-on: macOS-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - name: Test macOS
