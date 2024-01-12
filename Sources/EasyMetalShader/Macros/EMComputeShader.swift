@@ -22,6 +22,7 @@ import EasyMetalShaderMacro
     names: named(computePipelineState),
     named(args),
     named(init()),
+    named(setup()),
     named(dispatch(_:textureSizeReference:))
 )
 @attached(memberAttribute)

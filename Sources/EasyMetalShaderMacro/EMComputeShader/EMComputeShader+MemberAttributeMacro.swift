@@ -29,24 +29,37 @@ extension EMComputeShader: MemberAttributeMacro {
         }
         
         if binding.pattern.description == "impl" {
-            return []
+            return [
+                AttributeSyntax(
+                    attributeName: IdentifierTypeSyntax(
+                        name: .identifier("ShaderStringBuilder")
+                    )
+                )
+            ]
         }
         if binding.pattern.description == "customMetalCode" {
-            return []
+            return [
+                AttributeSyntax(
+                    attributeName: IdentifierTypeSyntax(
+                        name: .identifier("ShaderStringBuilder")
+                    )
+                )
+            ]
         }
         
         guard let type = binding.typeAnnotation?.type else {
-            throw "wow error"
+            throw "needs concrete type declaration for EMArgument. Use @EMIgnore to ignore argument."
+        }
+        
+        for attribute in varDecl.attributes {
+            if let attributeName = attribute.as(AttributeSyntax.self)?.attributeName.trimmedDescription {
+                if attributeName == "EMTextureArgument" || attributeName == "EMIgnore" {
+                    return []
+                }
+            }
         }
         
         if type.trimmedDescription == "MTLTexture?" {
-            for attribute in varDecl.attributes {
-                if let attributeName = attribute.as(AttributeSyntax.self)?.attributeName.trimmedDescription {
-                    if attributeName == "EMTextureArgument" {
-                        return []
-                    }
-                }
-            }
             return [
                 AttributeSyntax(
                     attributeName: IdentifierTypeSyntax(

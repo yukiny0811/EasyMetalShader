@@ -34,16 +34,9 @@ public struct EMTextureArgument: AccessorMacro {
             throw "invalid texture usage"
         }
         
-        var setString: String? = nil
-        
-        switch type.trimmedDescription {
-        case "MTLTexture?":
-            setString = ".texture2d(\(variableName), \(usage))"
-        default:
-            return []
+        guard let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage) else {
+            throw "type \(type) is not supported for EMTextureArgument."
         }
-        
-        guard let setString else { return [] }
         
         let didSetString =
 """

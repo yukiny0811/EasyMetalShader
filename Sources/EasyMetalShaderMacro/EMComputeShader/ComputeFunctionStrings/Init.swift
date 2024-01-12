@@ -10,7 +10,7 @@ import Foundation
 extension ComputeFunctionStrings {
     static func initFunc(variableInitStrings: [String]) -> String {
 """
-public init() {
+public func setup() {
 """
 +
         variableInitStrings.reduce("") { r, e in r + e + "\n" }

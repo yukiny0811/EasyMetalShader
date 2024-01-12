@@ -22,17 +22,29 @@ extension EMComputeShader: MemberMacro {
         
         var initStringList: [String] = []
         
+        var hasInitInImplementation = false
+        
         let memberBlock = declaration.memberBlock
         let memberBlockItemList = memberBlock.members
         for memberBlockItem in memberBlockItemList {
             if let variableDecl = memberBlockItem.decl.as(VariableDeclSyntax.self) {
+                
+                var ignore = false
+                for element in variableDecl.attributes {
+                    if let attribute = element.as(AttributeSyntax.self) {
+                        if attribute.attributeName.trimmedDescription == "EMIgnore" {
+                            ignore = true
+                        }
+                    }
+                }
+                if ignore {
+                    continue
+                }
+                
                 if let binding = variableDecl.bindings.first {
                     let variableName = binding.pattern.trimmedDescription
-                    if let type = binding.typeAnnotation?.type, let initialValue = binding.initializer?.value {
-                        switch type.trimmedDescription {
-                        case "Float":
-                            initStringList.append("args[\"\(variableName)\"] = .float(\(initialValue))")
-                        case "MTLTexture?":
+                    if let type = binding.typeAnnotation?.type {
+                        if type.trimmedDescription == "MTLTexture?" {
                             var usage: String? = nil
                             for element in variableDecl.attributes {
                                 if let attribute = element.as(AttributeSyntax.self) {
@@ -44,12 +56,44 @@ extension EMComputeShader: MemberMacro {
                                 }
                             }
                             if let usage {
-                                initStringList.append("args[\"\(variableName)\"] = .texture2d(\(initialValue), \(usage))")
+                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage) {
+                                    initStringList.append("args[\"\(variableName)\"] = \(setString)")
+                                }
+                            } else {
+                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: ".read_write") {
+                                    initStringList.append("args[\"\(variableName)\"] = \(setString)")
+                                }
                             }
-                        default:
-                            continue
+                        } else {
+                            if let setString = Util.typeToArgumentString(type: type.trimmedDescription, variableName: variableName) {
+                                initStringList.append("args[\"\(variableName)\"] = \(setString)")
+                            }
                         }
                     }
+                }
+            }
+            if let initDecl = memberBlockItem.decl.as(InitializerDeclSyntax.self) {
+                hasInitInImplementation = true
+                var isSetupCalled = false
+                if let block = initDecl.body {
+                    for blockItem in block.statements {
+                        if let functionCall = blockItem.item.as(FunctionCallExprSyntax.self) {
+                            if let declReference = functionCall.calledExpression.as(DeclReferenceExprSyntax.self) {
+                                if declReference.baseName.text == "setup" {
+                                    isSetupCalled = true
+                                }
+                            }
+                            if let memberAccessExpr = functionCall.calledExpression.as(MemberAccessExprSyntax.self) {
+                                let declName = memberAccessExpr.declName
+                                if declName.baseName.text == "setup" {
+                                    isSetupCalled = true
+                                }
+                            }
+                        }
+                    }
+                }
+                if isSetupCalled == false {
+                    throw "call setup() inside init()."
                 }
             }
         }
@@ -66,7 +110,16 @@ extension EMComputeShader: MemberMacro {
         
         let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.initFunc(variableInitStrings: initStringList))
         
-        let thisDecl4: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.dispatchFunc)
+        
+        var thisDecl4: DeclSyntax = ""
+        if !hasInitInImplementation {
+            thisDecl4 = 
+            """
+            init() {
+                setup()
+            }
+            """
+        }
         
         return [thisDecl1, thisDecl2, thisDecl3, thisDecl4]
     }

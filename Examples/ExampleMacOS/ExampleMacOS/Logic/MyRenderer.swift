@@ -20,11 +20,10 @@ class MyRenderer: ShaderRenderer {
         return inputs
     }()
     
-    let compute = MyCompute()
+    let compute = MyCompute(a: false)
 //    let render = MyRender(targetPixelFormat: .bgra8Unorm)
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
-        print(compute.args)
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
             compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100

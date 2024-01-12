@@ -11,14 +11,17 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 public struct EMArgument: AccessorMacro {
+    
     public static func expansion(
         of node: SwiftSyntax.AttributeSyntax,
         providingAccessorsOf declaration: some SwiftSyntax.DeclSyntaxProtocol,
         in context: some SwiftSyntaxMacros.MacroExpansionContext
     ) throws -> [SwiftSyntax.AccessorDeclSyntax] {
+        
         guard let varDecl = declaration.as(VariableDeclSyntax.self) else {
             return []
         }
+        
         let patternBindingList = varDecl.bindings
         
         guard let binding = patternBindingList.first else {
@@ -26,23 +29,14 @@ public struct EMArgument: AccessorMacro {
         }
         
         let variableName = binding.pattern.trimmedDescription
+        
         guard let type = binding.typeAnnotation?.type else {
-            throw "wow error"
-        }
-        guard let initialValue = binding.initializer?.value else {
-            throw "rrr"
+            throw "needs concrete type declaration for EMArgument."
         }
         
-        var setString: String? = nil
-        
-        switch type.trimmedDescription {
-        case "Float":
-            setString = ".float(\(variableName))"
-        default:
-            return []
+        guard let setString = Util.typeToArgumentString(type: type.trimmedDescription, variableName: variableName) else {
+            throw "type \(type) is not supported for EMArgument."
         }
-        
-        guard let setString else { return [] }
         
         let didSetString =
 """
