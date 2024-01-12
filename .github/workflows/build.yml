@@ -9,7 +9,7 @@ env:
   DEVELOPER_DIR: /Applications/Xcode_15.2.app
 jobs:
   build:
-    runs-on: macos-13-xl
+    runs-on: macos-13
     steps:
       - name: update swift
         run: sudo xcode-select -s /Applications/Xcode_15.0.app
@@ -19,7 +19,7 @@ jobs:
       - name: Build iOS
         run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=iOS"
   test:
-    runs-on: macos-13-xl
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - name: Test macOS
