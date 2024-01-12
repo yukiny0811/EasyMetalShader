@@ -31,7 +31,7 @@ open class EMMetalRenderFunction: NSObject, EMMetalFunction {
     public init(targetPixelFormat: MTLPixelFormat) {
         super.init()
         
-        MirrorUtil.setInitialValue(for: self)
+//        MirrorUtil.setInitialValue(for: self)
         
         let tempFunctionName = "f" + UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
         
