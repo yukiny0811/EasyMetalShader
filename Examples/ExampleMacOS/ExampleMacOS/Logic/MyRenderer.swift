@@ -20,19 +20,19 @@ class MyRenderer: ShaderRenderer {
         return inputs
     }()
     
-    let compute = MyCompute(a: false)
-//    let render = MyRender(targetPixelFormat: .bgra8Unorm)
+    let compute = MyCompute()
+    let render = MyRender(targetPixelFormat: .bgra8Unorm)
     
     override func draw(view: MTKView, drawable: CAMetalDrawable) {
         let dispatch = EMMetalDispatch()
         dispatch.compute { [self] encoder in
-            compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
-            compute.tex = drawable.texture
+//            compute.intensity = abs(sin(Float(Date().timeIntervalSince(date)))) * 100
+//            compute.tex = drawable.texture
             compute.dispatch(encoder, textureSizeReference: drawable.texture)
         }
-////        dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
-////            render.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
-////        }
+        dispatch.render(renderTargetTexture: drawable.texture, needsClear: false) { [self] encoder in
+            render.dispatch(encoder, textureSizeReference: drawable.texture, primitiveType: .point, vertices: particles)
+        }
         dispatch.present(drawable: drawable)
         dispatch.commit()
     }

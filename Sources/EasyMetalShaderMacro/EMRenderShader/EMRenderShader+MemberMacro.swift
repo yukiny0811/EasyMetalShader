@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension EMComputeShader: MemberMacro {
+extension EMRenderShader: MemberMacro {
     
     public static func expansion(
         of node: AttributeSyntax,
@@ -23,8 +23,6 @@ extension EMComputeShader: MemberMacro {
         var initStringList: [String] = []
         
         var hasInitInImplementation = false
-        var hasImpl = false
-        var hasMetalCode = false
         
         let memberBlock = declaration.memberBlock
         let memberBlockItemList = memberBlock.members
@@ -45,14 +43,6 @@ extension EMComputeShader: MemberMacro {
                 
                 if let binding = variableDecl.bindings.first {
                     let variableName = binding.pattern.trimmedDescription
-                    if variableName == "impl" {
-                        hasImpl = true
-                        continue
-                    }
-                    if variableName == "customMetalCode" {
-                        hasMetalCode = true
-                        continue
-                    }
                     if let type = binding.typeAnnotation?.type {
                         if type.trimmedDescription == "MTLTexture?" {
                             var usage: String? = nil
@@ -103,22 +93,14 @@ extension EMComputeShader: MemberMacro {
                     }
                 }
                 if isSetupCalled == false {
-                    throw "call setup() inside init()."
+                    throw "call setup(targetPixelFormat:) inside init()."
                 }
             }
         }
         
-        if !hasImpl {
-            throw "implement var impl: String { get }"
-        }
-        
-        if !hasMetalCode {
-            throw "implement var customMetalCode: String { get }"
-        }
-        
         let thisDecl1: DeclSyntax =
         """
-        var computePipelineState: MTLComputePipelineState!
+        var renderPipelineState: MTLRenderPipelineState!
         """
         
         let thisDecl2: DeclSyntax =
@@ -126,15 +108,15 @@ extension EMComputeShader: MemberMacro {
         var args: [String: EMMetalArgument] = [:]
         """
         
-        let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.initFunc(variableInitStrings: initStringList))
+        let thisDecl3: DeclSyntax = .init(stringLiteral: RenderFunctionStrings.initFunc(variableInitStrings: initStringList))
         
         
         var thisDecl4: DeclSyntax = ""
         if !hasInitInImplementation {
-            thisDecl4 = 
+            thisDecl4 =
             """
-            init() {
-                setup()
+            init(targetPixelFormat: MTLPixelFormat) {
+                setup(targetPixelFormat: targetPixelFormat)
             }
             """
         }

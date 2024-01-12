@@ -14,6 +14,7 @@ import SwiftSyntaxMacros
 struct EasyMetalShaderMacroPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         EMComputeShader.self,
+        EMRenderShader.self,
         EMArgument.self,
         EMTextureArgument.self,
     ]

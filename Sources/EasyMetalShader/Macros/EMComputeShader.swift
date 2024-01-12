@@ -14,7 +14,7 @@ import EasyMetalShaderMacro
     names: named(computePipelineState),
     named(args),
     named(init()),
-    named(dispatch(_:textureSizeReference:))
+    named(setup())
 )
 @attached(
     member,
@@ -22,8 +22,7 @@ import EasyMetalShaderMacro
     names: named(computePipelineState),
     named(args),
     named(init()),
-    named(setup()),
-    named(dispatch(_:textureSizeReference:))
+    named(setup())
 )
 @attached(memberAttribute)
 public macro EMComputeShader() = #externalMacro(module: "EasyMetalShaderMacro", type: "EMComputeShader")
