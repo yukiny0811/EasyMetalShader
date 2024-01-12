@@ -23,6 +23,9 @@ extension EMRenderShader: MemberMacro {
         var initStringList: [String] = []
         
         var hasInitInImplementation = false
+        var hasVertImpl = false
+        var hasFragImpl = false
+        var hasMetalCode = false
         
         let memberBlock = declaration.memberBlock
         let memberBlockItemList = memberBlock.members
@@ -43,6 +46,20 @@ extension EMRenderShader: MemberMacro {
                 
                 if let binding = variableDecl.bindings.first {
                     let variableName = binding.pattern.trimmedDescription
+                    
+                    if variableName == "vertImpl" {
+                        hasVertImpl = true
+                        continue
+                    }
+                    if variableName == "fragImpl" {
+                        hasFragImpl = true
+                        continue
+                    }
+                    if variableName == "customMetalCode" {
+                        hasMetalCode = true
+                        continue
+                    }
+                    
                     if let type = binding.typeAnnotation?.type {
                         if type.trimmedDescription == "MTLTexture?" {
                             var usage: String? = nil
@@ -96,6 +113,18 @@ extension EMRenderShader: MemberMacro {
                     throw "call setup(targetPixelFormat:) inside init()."
                 }
             }
+        }
+        
+        if !hasVertImpl {
+            throw "implement var vertImpl: String { get }"
+        }
+        
+        if !hasFragImpl {
+            throw "implement var fragImpl: String { get }"
+        }
+        
+        if !hasMetalCode {
+            throw "implement var customMetalCode: String { get }"
         }
         
         let thisDecl1: DeclSyntax =
