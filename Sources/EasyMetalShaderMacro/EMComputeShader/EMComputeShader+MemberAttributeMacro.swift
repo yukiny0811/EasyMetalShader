@@ -63,7 +63,7 @@ extension EMComputeShader: MemberAttributeMacro {
             return [
                 AttributeSyntax(
                     attributeName: IdentifierTypeSyntax(
-                        name: .identifier("EMTextureArgument(.read_write)")
+                        name: .identifier("EMTextureArgument(.read_write, .type2D)")
                     )
                 )
             ]

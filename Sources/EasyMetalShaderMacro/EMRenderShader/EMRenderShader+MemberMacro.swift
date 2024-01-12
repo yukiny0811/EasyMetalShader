@@ -63,21 +63,24 @@ extension EMRenderShader: MemberMacro {
                     if let type = binding.typeAnnotation?.type {
                         if type.trimmedDescription == "MTLTexture?" {
                             var usage: String? = nil
+                            var format: String? = nil
                             for element in variableDecl.attributes {
                                 if let attribute = element.as(AttributeSyntax.self) {
                                     if attribute.attributeName.trimmedDescription == "EMTextureArgument" {
-                                        if let args = attribute.arguments {
-                                            usage = args.trimmedDescription
+                                        if let args = attribute.arguments?.as(LabeledExprListSyntax.self) {
+                                            usage = args.first?.as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
+                                            format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
                                         }
+                                        
                                     }
                                 }
                             }
                             if let usage {
-                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage) {
+                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage, format: format) {
                                     initStringList.append("args[\"\(variableName)\"] = \(setString)")
                                 }
                             } else {
-                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: ".read_write") {
+                                if let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: "read_write", format: format) {
                                     initStringList.append("args[\"\(variableName)\"] = \(setString)")
                                 }
                             }

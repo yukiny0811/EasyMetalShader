@@ -63,6 +63,17 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             case .sample:
                 functionImpl += "texture2d<float, access::sample> \\(key) [[texture(\\(i+1))]]"
             }
+        case .texture3d(_, let usage):
+            switch usage {
+            case .read:
+                functionImpl += "texture3d<float, access::read> \\(key) [[texture(\\(i+1))]]"
+            case .write:
+                functionImpl += "texture3d<float, access::write> \\(key) [[texture(\\(i+1))]]"
+            case .read_write:
+                functionImpl += "texture3d<float, access::read_write> \\(key) [[texture(\\(i+1))]]"
+            case .sample:
+                functionImpl += "texture3d<float, access::sample> \\(key) [[texture(\\(i+1))]]"
+            }
         case .none:
             break
         }
@@ -99,6 +110,8 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
         case .float4x4(_):
             functionImpl += "float4x4 \\(key) = \\(key)_buf[0];"
         case .texture2d(_, _):
+            break
+        case .texture3d(_, _):
             break
         case .none:
             break
@@ -149,6 +162,17 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             case .sample:
                 functionImpl += "texture2d<float, access::sample> \\(key) [[texture(\\(i+1))]]"
             }
+        case .texture3d(_, let usage):
+            switch usage {
+            case .read:
+                functionImpl += "texture3d<float, access::read> \\(key) [[texture(\\(i+1))]]"
+            case .write:
+                functionImpl += "texture3d<float, access::write> \\(key) [[texture(\\(i+1))]]"
+            case .read_write:
+                functionImpl += "texture3d<float, access::read_write> \\(key) [[texture(\\(i+1))]]"
+            case .sample:
+                functionImpl += "texture3d<float, access::sample> \\(key) [[texture(\\(i+1))]]"
+            }
         case .none:
             break
         }
@@ -186,6 +210,8 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
         case .float4x4(_):
             functionImpl += "float4x4 \\(key) = \\(key)_buf[0];"
         case .texture2d(_, _):
+            break
+        case .texture3d(_, _):
             break
         case .none:
             break

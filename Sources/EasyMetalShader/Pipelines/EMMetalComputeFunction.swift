@@ -74,6 +74,8 @@ extension EMMetalComputeFunction {
                 encoder.setBytes([value], length: MemoryLayout<simd_float4x4>.stride, index: i+1)
             case .texture2d(let value, _):
                 encoder.setTexture(value, index: i+1)
+            case .texture3d(let value, _):
+                encoder.setTexture(value, index: i+1)
             case .none:
                 break
             }

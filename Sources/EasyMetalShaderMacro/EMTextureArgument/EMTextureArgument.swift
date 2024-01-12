@@ -30,12 +30,22 @@ public struct EMTextureArgument: AccessorMacro {
             throw "wow error"
         }
         
-        guard let usage = node.arguments?.trimmedDescription else {
+        guard let args = node.arguments?.as(LabeledExprListSyntax.self) else {
+            throw "invalid argument"
+        }
+        
+        guard let usage = args.first?.as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription else {
             throw "invalid texture usage"
         }
         
-        guard let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage) else {
+        let format = args[args.index(args.startIndex, offsetBy: 1)].as(LabeledExprSyntax.self)?.expression.as(MemberAccessExprSyntax.self)?.declName.baseName.trimmedDescription
+        
+        guard type.trimmedDescription == "MTLTexture?" else {
             throw "type \(type) is not supported for EMTextureArgument."
+        }
+        
+        guard let setString = Util.textureTypeToArgumentString(textureType: type.trimmedDescription, variableName: variableName, usage: usage, format: format) else {
+            throw "textureType \(format ?? "nil") is not supported for EMTextureArgument."
         }
         
         let didSetString =

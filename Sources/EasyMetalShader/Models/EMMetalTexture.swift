@@ -48,6 +48,38 @@ public class EMMetalTexture: NSObject {
         texture.label = label
         return texture
     }
+    
+    public static func create3d(width: Int, height: Int, depth: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
+        let descriptor = MTLTextureDescriptor()
+        descriptor.pixelFormat = pixelFormat
+        descriptor.textureType = .type3D
+        descriptor.width = width
+        descriptor.height = height
+        descriptor.depth = depth
+        descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        descriptor.resourceOptions = .storageModePrivate
+        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        texture.label = label
+        return texture
+    }
+    
+    public static func createManaged3d(width: Int, height: Int, depth: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
+        let descriptor = MTLTextureDescriptor()
+        descriptor.pixelFormat = pixelFormat
+        descriptor.textureType = .type3D
+        descriptor.width = width
+        descriptor.height = height
+        descriptor.depth = depth
+        descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        #if os(macOS)
+        descriptor.resourceOptions = .storageModeManaged
+        #elseif os(iOS)
+        descriptor.resourceOptions = .storageModeShared
+        #endif
+        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        texture.label = label
+        return texture
+    }
 }
 
 public extension MTLTexture {

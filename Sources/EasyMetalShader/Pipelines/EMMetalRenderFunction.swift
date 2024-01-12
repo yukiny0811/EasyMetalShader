@@ -75,6 +75,9 @@ extension EMMetalRenderFunction {
             case .texture2d(let value, _):
                 encoder.setVertexTexture(value, index: i+1)
                 encoder.setFragmentTexture(value, index: i+1)
+            case .texture3d(let value, _):
+                encoder.setVertexTexture(value, index: i+1)
+                encoder.setFragmentTexture(value, index: i+1)
             case .none:
                 break
             }
