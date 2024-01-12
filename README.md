@@ -236,6 +236,11 @@ class MyRender {
 - simd_float4x4
 - MTLTexture (only 2d texture)
 
+### Supported Platforms
+- macOS 11.0~
+- iOS 14.0~
+- iOS Simulator (render shader only works on physical devices)
+
 ### Custom Pipelines
 
 ```.swift

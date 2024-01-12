@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension EMRenderShader: MemberMacro {
+extension EMComputeShader3D: MemberMacro {
     
     public static func expansion(
         of node: AttributeSyntax,
@@ -23,8 +23,7 @@ extension EMRenderShader: MemberMacro {
         var initStringList: [String] = []
         
         var hasInitInImplementation = false
-        var hasVertImpl = false
-        var hasFragImpl = false
+        var hasImpl = false
         var hasMetalCode = false
         
         let memberBlock = declaration.memberBlock
@@ -46,20 +45,14 @@ extension EMRenderShader: MemberMacro {
                 
                 if let binding = variableDecl.bindings.first {
                     let variableName = binding.pattern.trimmedDescription
-                    
-                    if variableName == "vertImpl" {
-                        hasVertImpl = true
-                        continue
-                    }
-                    if variableName == "fragImpl" {
-                        hasFragImpl = true
+                    if variableName == "impl" {
+                        hasImpl = true
                         continue
                     }
                     if variableName == "customMetalCode" {
                         hasMetalCode = true
                         continue
                     }
-                    
                     if let type = binding.typeAnnotation?.type {
                         if type.trimmedDescription == "MTLTexture?" {
                             var usage: String? = nil
@@ -117,17 +110,13 @@ extension EMRenderShader: MemberMacro {
                     }
                 }
                 if isSetupCalled == false {
-                    throw "call setup(targetPixelFormat:) inside init()."
+                    throw "call setup() inside init()."
                 }
             }
         }
         
-        if !hasVertImpl {
-            throw "implement var vertImpl: String { get }"
-        }
-        
-        if !hasFragImpl {
-            throw "implement var fragImpl: String { get }"
+        if !hasImpl {
+            throw "implement var impl: String { get }"
         }
         
         if !hasMetalCode {
@@ -136,7 +125,7 @@ extension EMRenderShader: MemberMacro {
         
         let thisDecl1: DeclSyntax =
         """
-        var renderPipelineState: MTLRenderPipelineState!
+        var computePipelineState: MTLComputePipelineState!
         """
         
         let thisDecl2: DeclSyntax =
@@ -144,15 +133,15 @@ extension EMRenderShader: MemberMacro {
         var args: [String: EMMetalArgument] = [:]
         """
         
-        let thisDecl3: DeclSyntax = .init(stringLiteral: RenderFunctionStrings.initFunc(variableInitStrings: initStringList))
+        let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.initFunc(variableInitStrings: initStringList, gidTypeString: "ushort3"))
         
         
         var thisDecl4: DeclSyntax = ""
         if !hasInitInImplementation {
-            thisDecl4 =
+            thisDecl4 = 
             """
-            init(targetPixelFormat: MTLPixelFormat) {
-                setup(targetPixelFormat: targetPixelFormat)
+            init() {
+                setup()
             }
             """
         }

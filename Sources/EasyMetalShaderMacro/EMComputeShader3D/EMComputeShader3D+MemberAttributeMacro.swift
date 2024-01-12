@@ -10,7 +10,7 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-extension EMRenderShader: MemberAttributeMacro {
+extension EMComputeShader3D: MemberAttributeMacro {
     public static func expansion(
         of node: SwiftSyntax.AttributeSyntax,
         attachedTo declaration: some SwiftSyntax.DeclGroupSyntax,
@@ -28,7 +28,7 @@ extension EMRenderShader: MemberAttributeMacro {
             return []
         }
         
-        if binding.pattern.description == "vertImpl" {
+        if binding.pattern.description == "impl" {
             return [
                 AttributeSyntax(
                     attributeName: IdentifierTypeSyntax(
@@ -37,17 +37,6 @@ extension EMRenderShader: MemberAttributeMacro {
                 )
             ]
         }
-        
-        if binding.pattern.description == "fragImpl" {
-            return [
-                AttributeSyntax(
-                    attributeName: IdentifierTypeSyntax(
-                        name: .identifier("ShaderStringBuilder")
-                    )
-                )
-            ]
-        }
-        
         if binding.pattern.description == "customMetalCode" {
             return [
                 AttributeSyntax(

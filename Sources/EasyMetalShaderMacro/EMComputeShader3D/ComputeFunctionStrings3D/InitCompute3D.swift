@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension ComputeFunctionStrings {
+extension ComputeFunctionStrings3D {
     static func initFunc(variableInitStrings: [String], gidTypeString: String) -> String {
 """
 public func setup() {

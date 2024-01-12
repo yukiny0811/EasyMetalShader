@@ -19,26 +19,74 @@ public class EMMetalTexture: NSObject {
         self.usage = usage
     }
     
-    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
+    public static func create(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, isRenderTarget: Bool = true) -> MTLTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
         descriptor.width = width
         descriptor.height = height
-        descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        if isRenderTarget {
+            descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        } else {
+            descriptor.usage = [.shaderRead, .shaderWrite]
+        }
         descriptor.resourceOptions = .storageModePrivate
         let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return texture
     }
     
-    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?) -> MTLTexture {
+    public static func createManaged(width: Int, height: Int, pixelFormat: MTLPixelFormat, label: String?, isRenderTarget: Bool = true) -> MTLTexture {
         let descriptor = MTLTextureDescriptor()
         descriptor.pixelFormat = pixelFormat
         descriptor.textureType = .type2D
         descriptor.width = width
         descriptor.height = height
-        descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        if isRenderTarget {
+            descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        } else {
+            descriptor.usage = [.shaderRead, .shaderWrite]
+        }
+        #if os(macOS)
+        descriptor.resourceOptions = .storageModeManaged
+        #elseif os(iOS)
+        descriptor.resourceOptions = .storageModeShared
+        #endif
+        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        texture.label = label
+        return texture
+    }
+    
+    public static func create3d(width: Int, height: Int, depth: Int, pixelFormat: MTLPixelFormat, label: String?, isRenderTarget: Bool = true) -> MTLTexture {
+        let descriptor = MTLTextureDescriptor()
+        descriptor.pixelFormat = pixelFormat
+        descriptor.textureType = .type3D
+        descriptor.width = width
+        descriptor.height = height
+        descriptor.depth = depth
+        if isRenderTarget {
+            descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        } else {
+            descriptor.usage = [.shaderRead, .shaderWrite]
+        }
+        descriptor.resourceOptions = .storageModePrivate
+        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        texture.label = label
+        return texture
+    }
+    
+    public static func createManaged3d(width: Int, height: Int, depth: Int, pixelFormat: MTLPixelFormat, label: String?, isRenderTarget: Bool = true) -> MTLTexture {
+        let descriptor = MTLTextureDescriptor()
+        descriptor.pixelFormat = pixelFormat
+        descriptor.textureType = .type3D
+        descriptor.width = width
+        descriptor.height = height
+        descriptor.depth = depth
+        if isRenderTarget {
+            descriptor.usage = [.shaderRead, .shaderWrite, .renderTarget]
+        } else {
+            descriptor.usage = [.shaderRead, .shaderWrite]
+        }
         #if os(macOS)
         descriptor.resourceOptions = .storageModeManaged
         #elseif os(iOS)

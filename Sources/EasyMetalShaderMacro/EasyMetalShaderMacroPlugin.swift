@@ -17,6 +17,7 @@ struct EasyMetalShaderMacroPlugin: CompilerPlugin {
         EMRenderShader.self,
         EMArgument.self,
         EMTextureArgument.self,
+        EMComputeShader3D.self,
     ]
 }
 

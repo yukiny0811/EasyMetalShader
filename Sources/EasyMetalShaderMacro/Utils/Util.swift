@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MetalKit
 
 enum Util {
     
@@ -59,10 +60,17 @@ enum Util {
         }
     }
     
-    static func textureTypeToArgumentString(textureType: String, variableName: String, usage: String) -> String? {
-        switch textureType {
-        case "MTLTexture?":
-            return ".texture2d(\(variableName), \(usage))"
+    static func textureTypeToArgumentString(textureType: String, variableName: String, usage: String, format: String?) -> String? {
+        guard textureType == "MTLTexture?" else {
+            return nil
+        }
+        switch format {
+        case "type2D":
+            return ".texture2d(\(variableName), .\(usage))"
+        case "type3D":
+            return ".texture3d(\(variableName), .\(usage))"
+        case nil:
+            return ".texture2d(\(variableName), .\(usage))"
         default:
             return nil
         }
