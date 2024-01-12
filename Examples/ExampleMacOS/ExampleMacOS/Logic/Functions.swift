@@ -6,7 +6,6 @@
 //
 
 import EasyMetalShader
-import simd
 
 @EMComputeShader
 class MyCompute {
