@@ -79,7 +79,7 @@ class RenderShaderTests: XCTestCase {
     func testBuild() throws {
         
         #if targetEnvironment(simulator)
-        throw XCTSkip("skipping test - will not build on ios simulator")
+        throw XCTSkip("skipping test - will not run on ios simulator")
         #endif
         
         let shader = TestRenderShader(targetPixelFormat: .bgra8Unorm)
