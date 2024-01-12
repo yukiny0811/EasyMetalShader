@@ -78,10 +78,14 @@ class RenderShaderTests: XCTestCase {
     
     func testBuild() throws {
         
+        #if targetEnvironment(simulator)
+        throw XCTSkip("skipping test - will not build on ios simulator")
+        #endif
+        
         let shader = TestRenderShader(targetPixelFormat: .bgra8Unorm)
         
-        shader.tex1 =  EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil)
-        shader.tex2 = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil)
-        shader.tex3 = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil)
+        shader.tex1 =  EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil, isRenderTarget: false)
+        shader.tex2 = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil, isRenderTarget: false)
+        shader.tex3 = EMMetalTexture.create(width: 100, height: 100, pixelFormat: .bgra8Unorm, label: nil, isRenderTarget: false)
     }
 }
