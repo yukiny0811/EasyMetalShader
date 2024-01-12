@@ -248,11 +248,10 @@ dispatch.commit()
 
 ### Custom Metal Functions
 
-override customMetalCode property to add your original metal codes.
+implement customMetalCode property to add your original metal codes.
 
 ```.swift
-@ShaderStringBuilder
-override var customMetalCode: String {
+var customMetalCode: String {
     "inline float myFunc() {"
     "return 1.0;"
     "}"
