@@ -33,11 +33,11 @@ let package = Package(
                 "EasyMetalShaderMacro"
             ]
         ),
-//        .testTarget(
-//            name: "EasyMetalShaderTests",
-//            dependencies: [
-//                "EasyMetalShader"
-//            ]
-//        )
+        .testTarget(
+            name: "EasyMetalShaderTests",
+            dependencies: [
+                "EasyMetalShader"
+            ]
+        )
     ]
 )
