@@ -64,4 +64,18 @@ public struct VertexInput {
         self.input8 = input8
         self.input9 = input9
     }
+    
+    public init(
+        input0: simd_float4,
+        input1: simd_float4
+    ) {
+        self.input0 = input0
+        self.input1 = input1
+    }
+    
+    public init(
+        input0: simd_float4
+    ) {
+        self.input0 = input0
+    }
 }
