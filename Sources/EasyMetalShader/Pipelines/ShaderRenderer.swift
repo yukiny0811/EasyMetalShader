@@ -24,4 +24,12 @@ open class ShaderRenderer: NSObject, MTKViewDelegate {
     }
     
     open func draw(view: MTKView, drawable: CAMetalDrawable) {}
+    
+    #if os(iOS)
+    open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?, view: UIView?) {}
+    open func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?, view: UIView?) {}
+    open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?, view: UIView?) {}
+    open func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?, view: UIView?) {}
+    open func onScroll(recognizer: UIPanGestureRecognizer?, view: UIView?) {}
+    #endif
 }
