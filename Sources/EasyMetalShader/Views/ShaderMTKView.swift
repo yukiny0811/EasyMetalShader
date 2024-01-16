@@ -5,6 +5,8 @@
 //  Created by Yuki Kuwashima on 2024/01/04.
 //
 
+#if os(iOS) || os(macOS)
+
 import MetalKit
 import SwiftUI
 
@@ -107,3 +109,5 @@ public class ShaderMTKView: MTKView {
     }
     #endif
 }
+
+#endif
