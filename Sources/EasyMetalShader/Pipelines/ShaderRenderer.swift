@@ -8,6 +8,8 @@
 import MetalKit
 import simd
 
+#if os(iOS) || os(macOS)
+
 open class ShaderRenderer: NSObject, MTKViewDelegate {
     
     public var mousePosition: simd_float2 = .zero
@@ -33,3 +35,5 @@ open class ShaderRenderer: NSObject, MTKViewDelegate {
     open func onScroll(recognizer: UIPanGestureRecognizer?, view: UIView?) {}
     #endif
 }
+
+#endif
