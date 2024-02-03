@@ -125,12 +125,12 @@ extension EMComputeShader3D: MemberMacro {
         
         let thisDecl1: DeclSyntax =
         """
-        var computePipelineState: MTLComputePipelineState!
+        public var computePipelineState: MTLComputePipelineState!
         """
         
         let thisDecl2: DeclSyntax =
         """
-        var args: [String: EMMetalArgument] = [:]
+        public var args: [String: EMMetalArgument] = [:]
         """
         
         let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.initFunc(variableInitStrings: initStringList, gidTypeString: "ushort3"))
@@ -140,7 +140,7 @@ extension EMComputeShader3D: MemberMacro {
         if !hasInitInImplementation {
             thisDecl4 = 
             """
-            init() {
+            public init() {
                 setup()
             }
             """

@@ -9,18 +9,18 @@ env:
   DEVELOPER_DIR: /Applications/Xcode_15.2.app
 jobs:
   build:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v3
       - name: Build macOS
-        run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=macOS"
+        run: set -o pipefail && xcodebuild -skipMacroValidation -scheme EasyMetalShader build -destination "generic/platform=macOS,arch=arm64,variant=macOS" | xcpretty
       - name: Build iOS
-        run: xcodebuild -scheme EasyMetalShader build -destination "generic/platform=iOS"
+        run: set -o pipefail && xcodebuild -skipMacroValidation -scheme EasyMetalShader build -destination "generic/platform=iOS" | xcpretty
   test:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v3
       - name: Test macOS
-        run: xcodebuild -scheme EasyMetalShaderTests test -destination "platform=macOS,arch=x86_64"
+        run: set -o pipefail && xcodebuild -skipMacroValidation -scheme EasyMetalShaderTests test -destination "platform=macOS,arch=arm64" | xcpretty
       - name: Test iOS
-        run: xcodebuild -scheme EasyMetalShaderTests test -destination "name=iPhone 14 Pro"
+        run: set -o pipefail && xcodebuild -skipMacroValidation -scheme EasyMetalShaderTests test -destination "platform=iOS" | xcpretty
