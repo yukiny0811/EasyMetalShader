@@ -136,12 +136,12 @@ extension EMRenderShader: MemberMacro {
         
         let thisDecl1: DeclSyntax =
         """
-        var renderPipelineState: MTLRenderPipelineState!
+        public var renderPipelineState: MTLRenderPipelineState!
         """
         
         let thisDecl2: DeclSyntax =
         """
-        var args: [String: EMMetalArgument] = [:]
+        public var args: [String: EMMetalArgument] = [:]
         """
         
         let thisDecl3: DeclSyntax = .init(stringLiteral: RenderFunctionStrings.initFunc(variableInitStrings: initStringList))
@@ -151,7 +151,7 @@ extension EMRenderShader: MemberMacro {
         if !hasInitInImplementation {
             thisDecl4 =
             """
-            init(targetPixelFormat: MTLPixelFormat) {
+            public init(targetPixelFormat: MTLPixelFormat) {
                 setup(targetPixelFormat: targetPixelFormat)
             }
             """
