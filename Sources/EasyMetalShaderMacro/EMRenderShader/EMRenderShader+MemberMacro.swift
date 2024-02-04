@@ -151,8 +151,8 @@ extension EMRenderShader: MemberMacro {
         if !hasInitInImplementation {
             thisDecl4 =
             """
-            public init(targetPixelFormat: MTLPixelFormat) {
-                setup(targetPixelFormat: targetPixelFormat)
+            public init(targetPixelFormat: MTLPixelFormat, targetDepthPixelFormat: MTLPixelFormat? = nil) {
+                setup(targetPixelFormat: targetPixelFormat, targetDepthPixelFormat: targetDepthPixelFormat)
             }
             """
         }
