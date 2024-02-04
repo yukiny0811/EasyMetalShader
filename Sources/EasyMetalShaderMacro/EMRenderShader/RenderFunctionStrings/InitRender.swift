@@ -11,7 +11,7 @@ extension RenderFunctionStrings {
     static func initFunc(variableInitStrings: [String]) -> String {
         
 """
-public func setup(targetPixelFormat: MTLPixelFormat) {
+public func setup(targetPixelFormat: MTLPixelFormat, targetDepthPixelFormat: MTLPixelFormat? = nil) {
 """
         +
         variableInitStrings.reduce("") { r, e in r + e + "\n" }
@@ -242,6 +242,9 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
     descriptor.vertexDescriptor = vertexDesc
     descriptor.colorAttachments[0].pixelFormat = targetPixelFormat
     descriptor.colorAttachments[0].isBlendingEnabled = true
+    if let targetDepthPixelFormat {
+        descriptor.depthAttachmentPixelFormat = targetDepthPixelFormat
+    }
     self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
 }
 """
