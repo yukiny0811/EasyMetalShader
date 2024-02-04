@@ -244,6 +244,7 @@ public func setup(targetPixelFormat: MTLPixelFormat, targetDepthPixelFormat: MTL
     descriptor.colorAttachments[0].isBlendingEnabled = true
     if let targetDepthPixelFormat {
         descriptor.depthAttachmentPixelFormat = targetDepthPixelFormat
+        descriptor.stencilAttachmentPixelFormat = targetDepthPixelFormat
     }
     self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
 }
