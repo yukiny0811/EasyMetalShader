@@ -12,16 +12,16 @@ import Foundation
     conformances: EMMetalRenderFunction,
     names: named(renderPipelineState),
     named(args),
-    named(init(targetPixelFormat:)),
-    named(setup(targetPixelFormat:))
+    named(init(targetPixelFormat:targetDepthPixelFormat:)),
+    named(setup(targetPixelFormat:targetDepthPixelFormat:))
 )
 @attached(
     member,
     conformances: EMMetalRenderFunction,
     names: named(renderPipelineState),
     named(args),
-    named(init(targetPixelFormat:)),
-    named(setup(targetPixelFormat:))
+    named(init(targetPixelFormat:targetDepthPixelFormat:)),
+    named(setup(targetPixelFormat:targetDepthPixelFormat:))
 )
 @attached(memberAttribute)
 public macro EMRenderShader() = #externalMacro(module: "EasyMetalShaderMacro", type: "EMRenderShader")
