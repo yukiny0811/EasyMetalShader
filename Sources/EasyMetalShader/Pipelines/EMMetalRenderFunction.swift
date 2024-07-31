@@ -72,6 +72,27 @@ extension EMMetalRenderFunction {
             case .float4x4(let value):
                 encoder.setVertexBytes([value], length: MemoryLayout<simd_float4x4>.stride, index: i+1)
                 encoder.setFragmentBytes([value], length: MemoryLayout<simd_float4x4>.stride, index: i+1)
+            case .double(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<Double>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<Double>.stride, index: i+1)
+            case .double2(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double2>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double2>.stride, index: i+1)
+            case .double3(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double3>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double3>.stride, index: i+1)
+            case .double4(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double4>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double4>.stride, index: i+1)
+            case .double2x2(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double2x2>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double2x2>.stride, index: i+1)
+            case .double3x3(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double3x3>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double3x3>.stride, index: i+1)
+            case .double4x4(let value):
+                encoder.setVertexBytes([value], length: MemoryLayout<simd_double4x4>.stride, index: i+1)
+                encoder.setFragmentBytes([value], length: MemoryLayout<simd_double4x4>.stride, index: i+1)
             case .texture2d(let value, _):
                 encoder.setVertexTexture(value, index: i+1)
                 encoder.setFragmentTexture(value, index: i+1)

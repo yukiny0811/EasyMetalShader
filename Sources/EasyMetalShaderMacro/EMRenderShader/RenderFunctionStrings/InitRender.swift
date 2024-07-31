@@ -52,6 +52,20 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             functionImpl += "device const float3x3* \\(key)_buf [[buffer(\\(i+1))]]"
         case .float4x4(_):
             functionImpl += "device const float4x4* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double(_):
+            functionImpl += "device const double* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double2(_):
+            functionImpl += "device const double2* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double3(_):
+            functionImpl += "device const double3* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double4(_):
+            functionImpl += "device const double4* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double2x2(_):
+            functionImpl += "device const double2x2* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double3x3(_):
+            functionImpl += "device const double3x3* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double4x4(_):
+            functionImpl += "device const double4x4* \\(key)_buf [[buffer(\\(i+1))]]"
         case .texture2d(_, let usage):
             switch usage {
             case .read:
@@ -135,6 +149,20 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             functionImpl += "float3x3 \\(key) = \\(key)_buf[0];"
         case .float4x4(_):
             functionImpl += "float4x4 \\(key) = \\(key)_buf[0];"
+        case .double(_):
+            functionImpl += "double \\(key) = \\(key)_buf[0];"
+        case .double2(_):
+            functionImpl += "double2 \\(key) = \\(key)_buf[0];"
+        case .double3(_):
+            functionImpl += "double3 \\(key) = \\(key)_buf[0];"
+        case .double4(_):
+            functionImpl += "double4 \\(key) = \\(key)_buf[0];"
+        case .double2x2(_):
+            functionImpl += "double2x2 \\(key) = \\(key)_buf[0];"
+        case .double3x3(_):
+            functionImpl += "double3x3 \\(key) = \\(key)_buf[0];"
+        case .double4x4(_):
+            functionImpl += "double4x4 \\(key) = \\(key)_buf[0];"
         case .texture2d(_, _):
             break
         case .texture3d(_, _):
@@ -179,6 +207,20 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             functionImpl += "device const float3x3* \\(key)_buf [[buffer(\\(i+1))]]"
         case .float4x4(_):
             functionImpl += "device const float4x4* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double(_):
+            functionImpl += "device const double* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double2(_):
+            functionImpl += "device const double2* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double3(_):
+            functionImpl += "device const double3* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double4(_):
+            functionImpl += "device const double4* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double2x2(_):
+            functionImpl += "device const double2x2* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double3x3(_):
+            functionImpl += "device const double3x3* \\(key)_buf [[buffer(\\(i+1))]]"
+        case .double4x4(_):
+            functionImpl += "device const double4x4* \\(key)_buf [[buffer(\\(i+1))]]"
         case .texture2d(_, let usage):
             switch usage {
             case .read:
@@ -263,6 +305,20 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
             functionImpl += "float3x3 \\(key) = \\(key)_buf[0];"
         case .float4x4(_):
             functionImpl += "float4x4 \\(key) = \\(key)_buf[0];"
+        case .double(_):
+            functionImpl += "double \\(key) = \\(key)_buf[0];"
+        case .double2(_):
+            functionImpl += "double2 \\(key) = \\(key)_buf[0];"
+        case .double3(_):
+            functionImpl += "double3 \\(key) = \\(key)_buf[0];"
+        case .double4(_):
+            functionImpl += "double4 \\(key) = \\(key)_buf[0];"
+        case .double2x2(_):
+            functionImpl += "double2x2 \\(key) = \\(key)_buf[0];"
+        case .double3x3(_):
+            functionImpl += "double3x3 \\(key) = \\(key)_buf[0];"
+        case .double4x4(_):
+            functionImpl += "double4x4 \\(key) = \\(key)_buf[0];"
         case .texture2d(_, _):
             break
         case .texture3d(_, _):
