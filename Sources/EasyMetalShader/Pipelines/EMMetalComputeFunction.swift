@@ -94,6 +94,14 @@ extension EMMetalComputeFunction {
                 encoder.setBuffer(value.buffer, offset: 0, index: i+1)
             case .float4Buffer(let value):
                 encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .doubleBuffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double2Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double3Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double4Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
             case .none:
                 break
             }
@@ -154,6 +162,14 @@ extension EMMetalComputeFunction {
             case .float3Buffer(let value):
                 encoder.setBuffer(value.buffer, offset: 0, index: i+1)
             case .float4Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .doubleBuffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double2Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double3Buffer(let value):
+                encoder.setBuffer(value.buffer, offset: 0, index: i+1)
+            case .double4Buffer(let value):
                 encoder.setBuffer(value.buffer, offset: 0, index: i+1)
             case .none:
                 break

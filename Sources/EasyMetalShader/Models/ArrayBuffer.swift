@@ -290,3 +290,127 @@ public class Float4Buffer {
         return Array(UnsafeBufferPointer(start: arrayPointer, count: count))
     }
 }
+
+public class DoubleBuffer {
+
+    public var buffer: MTLBuffer
+    public let count: Int
+
+    public init(count: Int) {
+        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<Double>.stride * count)!
+        self.count = count
+    }
+
+    @discardableResult
+    public func setBytes(_ bytes: [Double]) throws -> Self {
+        guard bytes.count == count else {
+            throw "byte count is wrong"
+        }
+        self.buffer
+            .contents()
+            .copyMemory(
+                from: bytes,
+                byteCount: MemoryLayout<Double>.stride * count
+            )
+        return self
+    }
+
+    /// this can be super heavy to call.
+    public func readBytes() -> [Double] {
+        let arrayPointer = buffer.contents().assumingMemoryBound(to: Double.self)
+        return Array(UnsafeBufferPointer(start: arrayPointer, count: count))
+    }
+}
+
+public class Double2Buffer {
+
+    public var buffer: MTLBuffer
+    public let count: Int
+
+    public init(count: Int) {
+        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double2>.stride * count)!
+        self.count = count
+    }
+
+    @discardableResult
+    public func setBytes(_ bytes: [simd_double2]) throws -> Self {
+        guard bytes.count == count else {
+            throw "byte count is wrong"
+        }
+        self.buffer
+            .contents()
+            .copyMemory(
+                from: bytes,
+                byteCount: MemoryLayout<simd_double2>.stride * count
+            )
+        return self
+    }
+
+    /// this can be super heavy to call.
+    public func readBytes() -> [simd_double2] {
+        let arrayPointer = buffer.contents().assumingMemoryBound(to: simd_double2.self)
+        return Array(UnsafeBufferPointer(start: arrayPointer, count: count))
+    }
+}
+
+public class Double3Buffer {
+
+    public var buffer: MTLBuffer
+    public let count: Int
+
+    public init(count: Int) {
+        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double3>.stride * count)!
+        self.count = count
+    }
+
+    @discardableResult
+    public func setBytes(_ bytes: [simd_double3]) throws -> Self {
+        guard bytes.count == count else {
+            throw "byte count is wrong"
+        }
+        self.buffer
+            .contents()
+            .copyMemory(
+                from: bytes,
+                byteCount: MemoryLayout<simd_double3>.stride * count
+            )
+        return self
+    }
+
+    /// this can be super heavy to call.
+    public func readBytes() -> [simd_double3] {
+        let arrayPointer = buffer.contents().assumingMemoryBound(to: simd_double3.self)
+        return Array(UnsafeBufferPointer(start: arrayPointer, count: count))
+    }
+}
+
+public class Double4Buffer {
+
+    public var buffer: MTLBuffer
+    public let count: Int
+
+    public init(count: Int) {
+        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double4>.stride * count)!
+        self.count = count
+    }
+
+    @discardableResult
+    public func setBytes(_ bytes: [simd_double4]) throws -> Self {
+        guard bytes.count == count else {
+            throw "byte count is wrong"
+        }
+        self.buffer
+            .contents()
+            .copyMemory(
+                from: bytes,
+                byteCount: MemoryLayout<simd_double4>.stride * count
+            )
+        return self
+    }
+
+    /// this can be super heavy to call.
+    public func readBytes() -> [simd_double4] {
+        let arrayPointer = buffer.contents().assumingMemoryBound(to: simd_double4.self)
+        return Array(UnsafeBufferPointer(start: arrayPointer, count: count))
+    }
+}

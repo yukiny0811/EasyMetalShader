@@ -90,6 +90,14 @@ public func setup() {
             functionImpl += "device float3* \\(key) [[buffer(\\(i+1))]]"
         case .float4Buffer(_):
             functionImpl += "device float4* \\(key) [[buffer(\\(i+1))]]"
+        case .doubleBuffer(_):
+            functionImpl += "device double* \\(key) [[buffer(\\(i+1))]]"
+        case .double2Buffer(_):
+            functionImpl += "device double2* \\(key) [[buffer(\\(i+1))]]"
+        case .double3Buffer(_):
+            functionImpl += "device double3* \\(key) [[buffer(\\(i+1))]]"
+        case .double4Buffer(_):
+            functionImpl += "device double4* \\(key) [[buffer(\\(i+1))]]"
         case .none:
             break
         }

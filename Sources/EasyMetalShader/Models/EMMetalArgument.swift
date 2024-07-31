@@ -33,5 +33,9 @@ public enum EMMetalArgument {
     case float2Buffer(Float2Buffer)
     case float3Buffer(Float3Buffer)
     case float4Buffer(Float4Buffer)
+    case doubleBuffer(DoubleBuffer)
+    case double2Buffer(Double2Buffer)
+    case double3Buffer(Double3Buffer)
+    case double4Buffer(Double4Buffer)
 
 }

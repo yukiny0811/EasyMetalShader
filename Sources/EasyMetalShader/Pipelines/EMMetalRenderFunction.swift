@@ -105,6 +105,18 @@ extension EMMetalRenderFunction {
             case .float4Buffer(let value):
                 encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
                 encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .doubleBuffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .double2Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .double3Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .double4Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
             case .none:
                 break
             }

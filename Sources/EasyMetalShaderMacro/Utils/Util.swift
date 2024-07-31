@@ -73,6 +73,14 @@ enum Util {
             return ".float3Buffer(\(variableName))"
         case "Float4Buffer":
             return ".float4Buffer(\(variableName))"
+        case "DoubleBuffer":
+            return ".doubleBuffer(\(variableName))"
+        case "Double2Buffer":
+            return ".double2Buffer(\(variableName))"
+        case "Double3Buffer":
+            return ".double3Buffer(\(variableName))"
+        case "Double4Buffer":
+            return ".double4Buffer(\(variableName))"
 
         default:
             return nil
