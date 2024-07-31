@@ -224,6 +224,7 @@ class MyRender {
 
 - Int32
 - Float
+- Double
 - Bool
 - simd_int2
 - simd_int3
@@ -234,7 +235,23 @@ class MyRender {
 - simd_float2x2
 - simd_float3x3
 - simd_float4x4
-- MTLTexture (only 2d texture)
+- simd_double2
+- simd_double3
+- simd_double4
+- simd_double2x2
+- simd_double3x3
+- simd_double4x4
+- MTLTexture (2d)
+- MTLTexture (3d)
+- IntBuffer (array)
+- Int2Buffer (array)
+- Int3Buffer (array)
+- Int4Buffer (array)
+- BoolBuffer (array)
+- FloatBuffer (array)
+- Float2Buffer (array)
+- Float3Buffer (array)
+- Float4Buffer (array)
 
 ### Supported Platforms
 - macOS 11.0~
@@ -260,6 +277,25 @@ var customMetalCode: String {
     "inline float myFunc() {"
     "return 1.0;"
     "}"
+}
+```
+
+### Compute Shader for 3D Textures
+
+```.swift
+@EMComputeShader3D
+class MyCompute3D {
+    
+    @EMTextureArgument(.read, .type3D)
+    var tex: MTLTexture?
+    
+    var impl: String {
+        "float4 c = tex.read(gid);"
+    }
+    
+    var customMetalCode: String {
+        ""
+    }
 }
 ```
 

@@ -47,6 +47,9 @@ public class EMMetalDispatch {
     
     public func commit() {
         commandBuffer.commit()
+    }
+
+    public func waitUntilCompleted() {
         commandBuffer.waitUntilCompleted()
     }
 }
