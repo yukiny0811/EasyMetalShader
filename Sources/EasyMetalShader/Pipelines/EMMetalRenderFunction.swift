@@ -78,6 +78,33 @@ extension EMMetalRenderFunction {
             case .texture3d(let value, _):
                 encoder.setVertexTexture(value, index: i+1)
                 encoder.setFragmentTexture(value, index: i+1)
+            case .boolBuffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .intBuffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .int2Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .int3Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .int4Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .floatBuffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .float2Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .float3Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
+            case .float4Buffer(let value):
+                encoder.setVertexBuffer(value.buffer, offset: 0, index: i+1)
+                encoder.setFragmentBuffer(value.buffer, offset: 0, index: i+1)
             case .none:
                 break
             }

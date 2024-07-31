@@ -133,7 +133,7 @@ extension EMComputeShader3D: MemberMacro {
         public var args: [String: EMMetalArgument] = [:]
         """
         
-        let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings.initFunc(variableInitStrings: initStringList, gidTypeString: "ushort3"))
+        let thisDecl3: DeclSyntax = .init(stringLiteral: ComputeFunctionStrings3D.initFunc(variableInitStrings: initStringList, gidTypeString: "ushort3"))
         
         
         var thisDecl4: DeclSyntax = ""

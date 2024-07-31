@@ -72,6 +72,24 @@ public func setup() {
             case .sample:
                 functionImpl += "texture3d<float, access::sample> \\(key) [[texture(\\(i+1))]]"
             }
+        case .boolBuffer(_):
+            functionImpl += "device bool* \\(key) [[buffer(\\(i+1))]]"
+        case .intBuffer(_):
+            functionImpl += "device int* \\(key) [[buffer(\\(i+1))]]"
+        case .int2Buffer(_):
+            functionImpl += "device int2* \\(key) [[buffer(\\(i+1))]]"
+        case .int3Buffer(_):
+            functionImpl += "device int3* \\(key) [[buffer(\\(i+1))]]"
+        case .int4Buffer(_):
+            functionImpl += "device int4* \\(key) [[buffer(\\(i+1))]]"
+        case .floatBuffer(_):
+            functionImpl += "device float* \\(key) [[buffer(\\(i+1))]]"
+        case .float2Buffer(_):
+            functionImpl += "device float2* \\(key) [[buffer(\\(i+1))]]"
+        case .float3Buffer(_):
+            functionImpl += "device float3* \\(key) [[buffer(\\(i+1))]]"
+        case .float4Buffer(_):
+            functionImpl += "device float4* \\(key) [[buffer(\\(i+1))]]"
         case .none:
             break
         }
@@ -111,6 +129,8 @@ public func setup() {
         case .texture3d(_, _):
             break
         case .none:
+            break
+        default:
             break
         }
     }

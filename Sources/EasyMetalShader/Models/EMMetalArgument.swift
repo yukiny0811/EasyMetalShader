@@ -24,5 +24,14 @@ public enum EMMetalArgument {
     case float4x4(simd_float4x4)
     case texture2d(MTLTexture!, EMMetalTextureUsage)
     case texture3d(MTLTexture!, EMMetalTextureUsage)
-    
+    case boolBuffer(BoolBuffer)
+    case intBuffer(IntBuffer)
+    case int2Buffer(Int2Buffer)
+    case int3Buffer(Int3Buffer)
+    case int4Buffer(Int4Buffer)
+    case floatBuffer(FloatBuffer)
+    case float2Buffer(Float2Buffer)
+    case float3Buffer(Float3Buffer)
+    case float4Buffer(Float4Buffer)
+
 }
