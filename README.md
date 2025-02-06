@@ -8,6 +8,10 @@
 
 Easily create pipelines for Metal Shader.
 
+## Q&A (AI Documentation)
+
+https://chatgpt.com/g/g-67a4a543c1048191b24ee44bd805f64a-easymetalshader-library-q-a
+
 ## Usage
 
 ### Create Compute Function

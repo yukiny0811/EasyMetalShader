@@ -174,11 +174,11 @@ public func setup() {
     functionImpl += impl
     functionImpl += "}"
 
-    let library = try! ShaderCore.device.makeLibrary(
+    let library = try! ShaderCore_EasyMetalShaderLib.device.makeLibrary(
         source: functionImpl,
         options: nil
     )
-    self.computePipelineState = try! ShaderCore.device.makeComputePipelineState(
+    self.computePipelineState = try! ShaderCore_EasyMetalShaderLib.device.makeComputePipelineState(
         function: library.makeFunction(
             name: tempFunctionName
         )!

@@ -334,7 +334,7 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
     functionImpl += "}"
     
     
-    let library = try! ShaderCore.device.makeLibrary(
+    let library = try! ShaderCore_EasyMetalShaderLib.device.makeLibrary(
         source: functionImpl,
         options: nil
     )
@@ -354,7 +354,7 @@ public func setup(targetPixelFormat: MTLPixelFormat) {
     descriptor.vertexDescriptor = vertexDesc
     descriptor.colorAttachments[0].pixelFormat = targetPixelFormat
     descriptor.colorAttachments[0].isBlendingEnabled = true
-    self.renderPipelineState = try! ShaderCore.device.makeRenderPipelineState(descriptor: descriptor)
+    self.renderPipelineState = try! ShaderCore_EasyMetalShaderLib.device.makeRenderPipelineState(descriptor: descriptor)
 }
 """
     }

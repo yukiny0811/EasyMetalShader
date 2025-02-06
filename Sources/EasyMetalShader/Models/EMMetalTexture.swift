@@ -31,7 +31,7 @@ public class EMMetalTexture: NSObject {
             descriptor.usage = [.shaderRead, .shaderWrite]
         }
         descriptor.resourceOptions = .storageModePrivate
-        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        let texture = ShaderCore_EasyMetalShaderLib.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return texture
     }
@@ -52,7 +52,7 @@ public class EMMetalTexture: NSObject {
         #elseif os(iOS)
         descriptor.resourceOptions = .storageModeShared
         #endif
-        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        let texture = ShaderCore_EasyMetalShaderLib.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return texture
     }
@@ -70,7 +70,7 @@ public class EMMetalTexture: NSObject {
             descriptor.usage = [.shaderRead, .shaderWrite]
         }
         descriptor.resourceOptions = .storageModePrivate
-        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        let texture = ShaderCore_EasyMetalShaderLib.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return texture
     }
@@ -92,7 +92,7 @@ public class EMMetalTexture: NSObject {
         #elseif os(iOS)
         descriptor.resourceOptions = .storageModeShared
         #endif
-        let texture = ShaderCore.device.makeTexture(descriptor: descriptor)!
+        let texture = ShaderCore_EasyMetalShaderLib.device.makeTexture(descriptor: descriptor)!
         texture.label = label
         return texture
     }

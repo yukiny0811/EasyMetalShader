@@ -143,7 +143,7 @@ extension EMMetalRenderFunction {
             }
         }
         
-        let vertexBuffer = ShaderCore.device.makeBuffer(bytes: vertices, length: MemoryLayout<VertexInput>.stride * vertices.count)
+        let vertexBuffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(bytes: vertices, length: MemoryLayout<VertexInput>.stride * vertices.count)
         encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
         encoder.setViewport(

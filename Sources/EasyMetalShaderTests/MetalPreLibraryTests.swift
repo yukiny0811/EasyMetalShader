@@ -12,21 +12,21 @@ class MetalPreLibraryTests: XCTestCase {
     
     func testCompileRand() throws {
         let source = MetalPreLibrary.include + MetalPreLibrary.rand
-        try ShaderCore.device.makeLibrary(source: source, options: nil)
+        try ShaderCore_EasyMetalShaderLib.device.makeLibrary(source: source, options: nil)
     }
     
     func testCompileRasterizerData() throws {
         let source = MetalPreLibrary.include + MetalPreLibrary.rasterizerData
-        try ShaderCore.device.makeLibrary(source: source, options: nil)
+        try ShaderCore_EasyMetalShaderLib.device.makeLibrary(source: source, options: nil)
     }
     
     func testCompileVertexInput() throws {
         let source = MetalPreLibrary.include + MetalPreLibrary.vertexInput
-        try ShaderCore.device.makeLibrary(source: source, options: nil)
+        try ShaderCore_EasyMetalShaderLib.device.makeLibrary(source: source, options: nil)
     }
     
     func testCompileAllCombined() throws {
         let source = MetalPreLibrary.include + MetalPreLibrary.rand + MetalPreLibrary.rasterizerData + MetalPreLibrary.vertexInput
-        try ShaderCore.device.makeLibrary(source: source, options: nil)
+        try ShaderCore_EasyMetalShaderLib.device.makeLibrary(source: source, options: nil)
     }
 }

@@ -18,7 +18,7 @@ public class BoolBuffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<Bool>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<Bool>.stride * count)!
         self.count = count
     }
 
@@ -49,7 +49,7 @@ public class IntBuffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<Int32>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<Int32>.stride * count)!
         self.count = count
     }
 
@@ -80,7 +80,7 @@ public class Int2Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_int2>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_int2>.stride * count)!
         self.count = count
     }
 
@@ -111,7 +111,7 @@ public class Int3Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_int3>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_int3>.stride * count)!
         self.count = count
     }
 
@@ -142,7 +142,7 @@ public class Int4Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_int4>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_int4>.stride * count)!
         self.count = count
     }
 
@@ -173,7 +173,7 @@ public class FloatBuffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<Float>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<Float>.stride * count)!
         self.count = count
     }
 
@@ -204,7 +204,7 @@ public class Float2Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_float2>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_float2>.stride * count)!
         self.count = count
     }
 
@@ -235,7 +235,7 @@ public class Float3Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_float3>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_float3>.stride * count)!
         self.count = count
     }
 
@@ -266,7 +266,7 @@ public class Float4Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_float4>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_float4>.stride * count)!
         self.count = count
     }
 
@@ -297,7 +297,7 @@ public class DoubleBuffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<Double>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<Double>.stride * count)!
         self.count = count
     }
 
@@ -328,7 +328,7 @@ public class Double2Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double2>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_double2>.stride * count)!
         self.count = count
     }
 
@@ -359,7 +359,7 @@ public class Double3Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double3>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_double3>.stride * count)!
         self.count = count
     }
 
@@ -390,7 +390,7 @@ public class Double4Buffer {
     public let count: Int
 
     public init(count: Int) {
-        self.buffer = ShaderCore.device.makeBuffer(length: MemoryLayout<simd_double4>.stride * count)!
+        self.buffer = ShaderCore_EasyMetalShaderLib.device.makeBuffer(length: MemoryLayout<simd_double4>.stride * count)!
         self.count = count
     }
 
