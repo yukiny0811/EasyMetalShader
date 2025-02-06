@@ -11,7 +11,7 @@ extension MTLTexture {
             return nil
         }
         let flipped = ciimage.transformed(by: CGAffineTransform(scaleX: 1, y: -1))
-        let cgimage = ShaderCore.context.createCGImage(
+        let cgimage = ShaderCore_EasyMetalShaderLib.context.createCGImage(
             flipped,
             from: flipped.extent
         )

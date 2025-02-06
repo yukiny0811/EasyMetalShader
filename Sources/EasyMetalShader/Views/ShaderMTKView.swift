@@ -22,7 +22,7 @@ public class ShaderMTKView: MTKView {
     
     init(renderer: ShaderRenderer) {
         self.renderer = renderer
-        super.init(frame: .zero, device: ShaderCore.device)
+        super.init(frame: .zero, device: ShaderCore_EasyMetalShaderLib.device)
         
         self.frame = .zero
         self.delegate = renderer
@@ -86,7 +86,8 @@ public class ShaderMTKView: MTKView {
         location.y = event.window!.contentRect(
             forFrameRect: event.window!.frame
         ).height - location.y
-        location -= CGPoint(x: viewFrame.minX, y: viewFrame.minY)
+        location.x -= viewFrame.minX
+        location.y -= viewFrame.minY
         return simd_float2(Float(location.x), Float(location.y))
     }
     #endif

@@ -13,7 +13,7 @@ public class EMMetalDispatch {
     private let commandBuffer: MTLCommandBuffer
     
     public init() {
-        commandBuffer = ShaderCore.commandQueue.makeCommandBuffer()!
+        commandBuffer = ShaderCore_EasyMetalShaderLib.commandQueue.makeCommandBuffer()!
     }
     
     public func custom(_ process: @escaping (MTLCommandBuffer) -> ()) {

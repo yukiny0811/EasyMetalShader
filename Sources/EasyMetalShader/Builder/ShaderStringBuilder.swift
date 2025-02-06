@@ -9,6 +9,9 @@ import Foundation
 
 @resultBuilder
 public struct ShaderStringBuilder {
+    public static func buildBlock() -> String {
+        ""
+    }
     public static func buildBlock(_ component: String) -> String{
         component
     }
